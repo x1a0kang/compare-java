@@ -1,0 +1,10 @@
+dependencies {
+    implementation rootProject.ext.libraries["spring-boot-starter-data-mongodb"]
+    implementation rootProject.ext.libraries['sentry']
+}
+
+jar{
+    enabled(true)
+    archiveClassifier.set('')
+}
+bootJar.enabled=false

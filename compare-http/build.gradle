@@ -1,0 +1,27 @@
+dependencies {
+    implementation rootProject.ext.libraries["easy-excel"]
+    implementation rootProject.ext.libraries["spring-boot-starter-data-mongodb"]
+
+    implementation project(':compare-common') {
+        // 排除引用项目的 bootBuildInfo 信息，否则 actuator 显示时显示的是引用项目的信息而非自身信息
+        // 同一个通用的项目，如 common，只需在一处排除即可，其它项目也引用了 common，无需多次排除
+        gradle.taskGraph.whenReady { graph ->
+            tasks.each { task ->
+                if (task.name.contains("bootBuildInfo")) {
+                    task.enabled = false
+                }
+            }
+        }
+    }
+    annotationProcessor rootProject.ext.libraries.'spring-boot-configuration-processor'
+}
+
+jar.enabled(false)
+bootJar {
+    manifest {
+        attributes "Manifest-Version": 1.0
+        attributes 'Created-By': 'Gradle'
+        attributes 'Class-Path': ". config/ libs/ " + configurations.runtimeClasspath.files.collect { "libs/$it.name" }.join(' ')
+    }
+    exclude("*.properties", "app.*", "*.xml", "*.jar")
+}

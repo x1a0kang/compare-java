@@ -1,0 +1,272 @@
+import java.text.SimpleDateFormat
+
+buildscript {
+    ext {
+        SpringBootVersion = '3.3.2'
+    }
+    repositories {
+        maven { url = "https://maven.aliyun.com/repository/public" }
+        maven { url = "https://maven.aliyun.com/repository/apache-snapshots" }
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${SpringBootVersion}"
+//        classpath "io.spring.gradle:dependency-management-plugin:1.1.6.RELEASE"
+    }
+}
+
+//plugins {
+//    id 'java'
+//    id 'idea'
+//    id 'maven-publish'
+//    id 'org.springframework.boot' version '3.3.2'
+//    id 'io.spring.dependency-management' version '1.1.6'
+//}
+
+
+ext {
+    if (!project.hasProperty('buildType')) {
+        buildType = 'local'
+    }
+    if (buildType == 'local') {
+        Xmx = '1g'
+        Xms = '1g'
+    } else if (buildType == 'dev') {
+        Xmx = '2g'
+        Xms = '2g'
+        //测试线和正式线需要多配一点内存，由于目前CI的机制，测试线和正式线的app.sh是共用的。
+    } else if (buildType == 'releasezp') {
+        Xmx = '8g'
+        Xms = '8g'
+        //测试线和正式线需要多配一点内存，由于目前CI的机制，测试线和正式线的app.sh是共用的。
+    } else {
+        Xmx = '4g'
+        Xms = '4g'
+    }
+}
+
+// jar包版本
+ext.versions = [
+        "maven-resources-plugin"   : "3.3.0",
+        'spring-boot-admin-starter': '2.7.2',
+        "netty"                    : "4.1.79.Final",
+        'okhttp'                   : '4.9.3',
+        'commons-pool2'            : '2.11.1',
+        'guava'                    : '31.0.1-jre',
+        'prometheus'               : '1.9.2',
+        'logback'                  : "1.5.6",
+        'joda-time'                : '2.11.0',
+        'commons-lang3'            : '3.12.0',
+        "jackson-databind"         : "2.13.3",
+        "jackson-annotations"      : "2.13.3",
+        "jackson-core"             : "2.13.3",
+        "json-api"                 : "2.0.1",
+        "commons-text"             : "1.10.0",
+        "hutool-all"               : "5.8.5",
+        "junit"                    : "4.13.2",
+        "sentry"                   : "6.33.1",
+        "easy-excel"               : "3.3.2"
+]
+
+// 各种可能会用到的jar包
+ext.libraries = [
+        "maven-resources-plugin"             : "org.apache.maven.plugins:maven-resources-plugin:${ext.versions.'maven-resources-plugin'}",
+        "spring-boot-starter"                : "org.springframework.boot:spring-boot-starter",
+        "spring-boot-starter-aop"            : "org.springframework.boot:spring-boot-starter-aop",
+        "spring-boot-starter-web"            : "org.springframework.boot:spring-boot-starter-web",
+        "spring-boot-starter-mail"           : "org.springframework.boot:spring-boot-starter-mail",
+        "spring-boot-starter-jdbc"           : "org.springframework.boot:spring-boot-starter-jdbc",
+        "spring-boot-starter-security"       : "org.springframework.boot:spring-boot-starter-security",
+        "spring-boot-starter-actuator"       : "org.springframework.boot:spring-boot-starter-actuator",
+        "spring-boot-starter-data-mongodb"   : "org.springframework.boot:spring-boot-starter-data-mongodb",
+        "spring-boot-starter-data-redis"     : "org.springframework.boot:spring-boot-starter-data-redis",
+        "spring-boot-starter-data-jpa"       : "org.springframework.boot:spring-boot-starter-data-jpa",
+        "spring-boot-starter-quartz"         : "org.springframework.boot:spring-boot-starter-quartz",
+        "spring-boot-starter-thymeleaf"      : "org.springframework.boot:spring-boot-starter-thymeleaf",
+        "spring-boot-starter-validation"     : "org.springframework.boot:spring-boot-starter-validation",
+        "spring-boot-admin-starter-server"   : "de.codecentric:spring-boot-admin-starter-server:${ext.versions.'spring-boot-admin-starter'}",
+        "spring-boot-configuration-processor": "org.springframework.boot:spring-boot-configuration-processor",
+        "spring-boot-starter-test"           : "org.springframework.boot:spring-boot-starter-test",
+        "spring-boot-admin-starter-client"   : "de.codecentric:spring-boot-admin-starter-client:${ext.versions.'spring-boot-admin-starter'}",
+        "spring-boot-admin-dependencies"     : "de.codecentric:spring-boot-admin-dependencies:${ext.versions.'spring-boot-admin-starter'}",
+        "spring-retry"                       : "org.springframework.retry:spring-retry:${ext.versions.'spring-retry'}",
+        "prometheus"                         : "io.micrometer:micrometer-registry-prometheus:${ext.versions.prometheus}",
+        "logback-core"                       : "ch.qos.logback:logback-core:${ext.versions.'logback'}",
+        "logback-classic"                    : "ch.qos.logback:logback-classic:${ext.versions.'logback'}",
+        "okhttp"                             : "com.squareup.okhttp3:okhttp:${ext.versions.'okhttp'}",
+        "commons-pool2"                      : "org.apache.commons:commons-pool2:${ext.versions.'commons-pool2'}",
+        "commons-lang3"                      : "org.apache.commons:commons-lang3:${ext.versions.'commons-lang3'}",
+        "guava"                              : "com.google.guava:guava:${ext.versions.'guava'}",
+        "joda-time"                          : "joda-time:joda-time:${ext.versions.'joda-time'}",
+        "jackson-core"                       : "com.fasterxml.jackson.core:jackson-core:${ext.versions.'jackson-core'}",
+        "jackson-databind"                   : "com.fasterxml.jackson.core:jackson-databind:${ext.versions.'jackson-databind'}",
+        "jackson-annotations"                : "com.fasterxml.jackson.core:jackson-annotations:${ext.versions.'jackson-annotations'}",
+        "commons-text"                       : "org.apache.commons:commons-text:${ext.versions.'commons-text'}",
+        "hutool-all"                         : "cn.hutool:hutool-all:${ext.versions.'hutool-all'}",
+        "json-api"                           : "jakarta.json:jakarta.json-api:${ext.versions.'json-api'}",
+        "oracle-driver"                      : "com.oracle:ojdbc6:${ext.versions.'oracle'}",
+        "mysql"                              : "mysql:mysql-connector-java:${ext.versions.'mysql'}",
+        "spring-kafka"                       : "org.springframework.kafka:spring-kafka",
+        "clickhouse"                         : "ru.yandex.clickhouse:clickhouse-jdbc:${ext.versions.'clickhouse'}",
+        "jasypt-spring-boot-starter"         : "com.github.ulisesbocchio:jasypt-spring-boot-starter:${ext.versions.'jasypt-spring-boot-starter'}",
+        "httpclient"                         : "org.apache.httpcomponents:httpclient:${ext.versions.'httpclient'}",
+        "junit"                              : "junit:junit:${ext.versions.'junit'}",
+        "sentry"                             : "io.sentry:sentry-spring-boot-starter:${ext.versions.'sentry'}",
+        "easy-excel"                         : "com.alibaba:easyexcel:${ext.versions.'easy-excel'}"
+]
+
+def static buildTime() {
+    final dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ")
+    dateFormat.timeZone = TimeZone.getTimeZone('GMT+8')
+    dateFormat.format(new Date())
+}
+
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'maven-publish'
+
+    // spring统一依赖管理
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'org.x1a0kang'
+    version = '0.0.1-SNAPSHOT'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+
+    project(':compare-http') { version = '0.0.1-SNAPSHOT' }           //服务1，接口服务
+    project(':compare-common') { version = '0.0.1-SNAPSHOT' }         //类库1，工具库组件
+
+    // java编译的时候缺省状态下会因为中文字符而失败
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+
+    repositories {
+        maven { url = "https://maven.aliyun.com/repository/public" }
+        maven { url = "https://maven.aliyun.com/repository/apache-snapshots" }
+        mavenCentral()
+    }
+
+    configurations {
+        // 所有需要忽略的包定义在此
+        all*.exclude group: 'org.apache.logging.log4j'
+    }
+
+    test {
+        //useJUnitPlatform()
+    }
+
+    dependencies {
+        implementation rootProject.ext.libraries['spring-boot-starter']
+        implementation rootProject.ext.libraries['spring-boot-starter-web']
+        implementation rootProject.ext.libraries['spring-boot-starter-actuator']
+        implementation rootProject.ext.libraries['spring-boot-admin-starter-client']
+        implementation rootProject.ext.libraries['commons-pool2']
+        implementation rootProject.ext.libraries['commons-lang3']
+        implementation rootProject.ext.libraries['guava']
+        implementation rootProject.ext.libraries['okhttp']
+        implementation rootProject.ext.libraries['joda-time']
+        implementation rootProject.ext.libraries['logback-core']
+        implementation rootProject.ext.libraries['logback-classic']
+        implementation rootProject.ext.libraries['json-api']
+        testImplementation rootProject.ext.libraries['spring-boot-starter-test']
+        testImplementation rootProject.ext.libraries['junit']
+        annotationProcessor rootProject.ext.libraries['spring-boot-configuration-processor']
+    }
+
+    task copyDependencies(type: Copy) {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        group "eastmoney"
+        from configurations.compileClasspath
+        into("${buildDir}/${buildType}/libs")
+        from configurations.runtimeClasspath
+        into("${buildDir}/${buildType}/libs")
+    }
+
+    task copyJar(type: Copy) {
+        group "eastmoney"
+        from "${buildDir}/libs"
+        into "${buildDir}/${buildType}"
+    }
+
+    task copyShell(type: Copy) {
+        group "eastmoney"
+        from "${buildDir}/resources/main"
+        include("*.sh", "app.bat", "banner.txt", "shell/*.sh", "shell/*.py")
+        into "${buildDir}/${buildType}"
+        filter(org.apache.tools.ant.filters.ReplaceTokens,
+                tokens: [gradleProjName   : project.name,
+                         gradleProjVersion: project.version,
+                         buildType        : buildType,
+                         Xms              : Xms,
+                         Xmx              : Xmx])
+    }
+
+    task copyConfig(type: Copy) {
+        group "eastmoney"
+        from "${buildDir}/resources/main"
+        include("application.properties", "logback.xml", "logback-skywalking.xml", "customize_enhance.xml", "application-${buildType}.properties",
+                "application-chinese.properties", "workid_mapping.txt", "limit.lua", "taskinfo/*", "POC/*")
+        into "${buildDir}/${buildType}/config"
+        eachFile { fileCopyDetails ->
+            // 只对文本文件应用过滤
+            if (!fileCopyDetails.name.endsWith('.xlsx')) {
+                filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: [buildType: buildType])
+            }
+        }
+
+    }
+
+    task zipAll(type: Zip) {
+        group "eastmoney"
+        delete "${project.name}-${project.version}-${buildType}.zip"
+        destinationDirectory = file("${buildDir}/${buildType}")
+        archiveFileName = "${project.name}-${project.version}-${buildType}.zip"
+        from "${buildDir}/${buildType}"
+        exclude("${project.name}-${project.version}-${buildType}.zip", "jar")
+        into "${project.name}-${project.version}"
+    }
+
+    // 生成META-INFO/build-info.properties，包含项目构建的基本信息
+    // 用于Spring Boot Admin中显示
+    springBoot {
+        buildInfo() {
+            properties {
+                // 添加额外的字段
+                additional = [
+                        // 覆盖time字段，更改时区
+                        time: buildTime()]
+            }
+        }
+    }
+
+    task prepareKotlinBuildScriptModel {
+
+    }
+
+    task index() {
+        publish.dependsOn zipAll
+        zipAll.dependsOn(copyDependencies)
+        copyDependencies.dependsOn(copyConfig)
+        copyConfig.dependsOn(copyShell)
+        copyShell.dependsOn(copyJar)
+        copyJar.dependsOn(build)
+        compileJava.dependsOn(bootBuildInfo)
+        bootBuildInfo.dependsOn(clean)
+    }
+}
+
+// gradle  :app-robo-advisor-api:clean :app-robo-advisor-api:publish -P buildType=test -x test
+// gradle  :app-robo-advisor-sync-database:clean :app-robo-advisor-sync-database:publish -P buildType=dev -x test
+// gradle  :app-robo-advisor-sync-kafka:clean :app-robo-advisor-sync-kafka:publish -P buildType=release -x test
+// gradle  :app-robo-advisor-admin:clean :app-robo-advisor-admin:publish -P buildType=test -x test

@@ -1,0 +1,92 @@
+package org.x1a0kang.compare.http.controller;
+
+import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.x1a0kang.compare.common.model.ApiReturnInfo;
+import org.x1a0kang.compare.common.utils.StringUtil;
+import org.x1a0kang.compare.http.model.Camera;
+import org.x1a0kang.compare.http.model.CameraBrand;
+import org.x1a0kang.compare.http.model.CameraSpec;
+import org.x1a0kang.compare.http.model.request.IdListRequest;
+import org.x1a0kang.compare.http.model.request.IdRequest;
+import org.x1a0kang.compare.http.model.request.PageRequest;
+import org.x1a0kang.compare.http.model.request.PriceRangeRequest;
+import org.x1a0kang.compare.http.service.CameraService;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/camera")
+public class CompareController {
+    @Resource
+    private CameraService cameraService;
+
+    @PostMapping("/getAll")
+    public ApiReturnInfo getAll(@RequestBody(required = false) PageRequest request) {
+        if (null == request) {
+            return ApiReturnInfo.getParamMissing();
+        }
+        List<Camera> cameraList = cameraService.getAll(request.getPage(), request.getPageSize());
+        if (StringUtil.isNullOrEmpty(cameraList)) {
+            return ApiReturnInfo.getFailure("相机不存在");
+        }
+        return ApiReturnInfo.getSuccess(cameraList);
+    }
+
+    @PostMapping("/getOne")
+    public ApiReturnInfo getOne(@RequestBody(required = false) IdRequest request) {
+        if (null == request || StringUtil.isNullOrEmpty(request.getId())) {
+            return ApiReturnInfo.getParamMissing();
+        }
+        Camera camera = cameraService.getCamera(request.getId());
+        if (camera == null) {
+            return ApiReturnInfo.getFailure("相机不存在");
+        }
+        return ApiReturnInfo.getSuccess(camera);
+    }
+
+    @PostMapping("/getListById")
+    public ApiReturnInfo getListById(@RequestBody(required = false) IdListRequest request) {
+        if (null == request || StringUtil.isNullOrEmpty(request.getIdList())) {
+            return ApiReturnInfo.getParamMissing();
+        }
+        List<Camera> cameraList = cameraService.getCameraList(request.getIdList());
+        if (StringUtil.isNullOrEmpty(cameraList)) {
+            return ApiReturnInfo.getFailure("相机不存在");
+        }
+        return ApiReturnInfo.getSuccess(cameraList);
+    }
+
+    @PostMapping("/getPriceRange")
+    public ApiReturnInfo getPriceRange(@RequestBody(required = false) PriceRangeRequest request) {
+        if (null == request) {
+            return ApiReturnInfo.getParamMissing();
+        }
+        List<Camera> cameras = cameraService.priceRange(request.getMin(), request.getMax());
+        if (StringUtil.isNullOrEmpty(cameras)) {
+            return ApiReturnInfo.getFailure("相机不存在");
+        }
+        return ApiReturnInfo.getSuccess(cameras);
+    }
+
+    @PostMapping("/getCameraSpec")
+    public ApiReturnInfo getCameraSpec() {
+        List<CameraSpec> cameraSpecs = cameraService.getSpec();
+        if (StringUtil.isNullOrEmpty(cameraSpecs)) {
+            return ApiReturnInfo.getFailure("相机规格不存在");
+        }
+        return ApiReturnInfo.getSuccess(cameraSpecs);
+    }
+
+    @PostMapping("/getBrand")
+    public ApiReturnInfo getBrand() {
+        List<List<CameraBrand>> cameraBrandList = cameraService.getBrand();
+        if (StringUtil.isNullOrEmpty(cameraBrandList)) {
+            return ApiReturnInfo.getFailure("相机品牌不存在");
+        }
+        return ApiReturnInfo.getSuccess(cameraBrandList);
+    }
+}

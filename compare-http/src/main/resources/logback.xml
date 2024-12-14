@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <!--不输出启动日志-->
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+
+    <!-- 控制台输出 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--系统日志-->
+    <appender name="SYS_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/sys/compare-http.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/sys/compare-http.%d{yyyyMMdd}.log.gz</fileNamePattern>
+            <!-- 保留180天的历史记录-->
+            <maxHistory>365</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>utf-8</charset>
+            <pattern>%date [%thread] %-5level %logger{80} : %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="SYS_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>512</queueSize>
+        <appender-ref ref="SYS_FILE"/>
+    </appender>
+
+    <!--DCLOG-->
+    <appender name="DCLOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/dclog/compare-http.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/dclog/compare-http.%d{yyyyMMdd}.log.gz</fileNamePattern>
+            <!-- 保留180天的历史记录-->
+            <maxHistory>365</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>utf-8</charset>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="DCLOG_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>512</queueSize>
+        <appender-ref ref="DCLOG_FILE"/>
+    </appender>
+    <logger name="com.eastmoney" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="SYS_ASYNC"/>
+    </logger>
+    <logger name="DCLOG" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="DCLOG_ASYNC"/>
+    </logger>
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="SYS_ASYNC"/>
+    </root>
+</configuration>
