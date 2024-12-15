@@ -60,6 +60,13 @@ public class CameraService {
         }
         return list;
     }
+
+    public List<Camera> search(int page, int pageSize, String keyword) {
+        int skip = (page - 1) * pageSize;
+        Query query = new Query(Criteria.where("name").regex(keyword));
+        query.skip(skip).limit(pageSize);
+        return mongoTemplate.find(query, Camera.class, "camera");
+    }
 }
 
 

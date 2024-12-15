@@ -10,10 +10,7 @@ import org.x1a0kang.compare.common.utils.StringUtil;
 import org.x1a0kang.compare.http.model.Camera;
 import org.x1a0kang.compare.http.model.CameraBrand;
 import org.x1a0kang.compare.http.model.CameraSpec;
-import org.x1a0kang.compare.http.model.request.IdListRequest;
-import org.x1a0kang.compare.http.model.request.IdRequest;
-import org.x1a0kang.compare.http.model.request.PageRequest;
-import org.x1a0kang.compare.http.model.request.PriceRangeRequest;
+import org.x1a0kang.compare.http.model.request.*;
 import org.x1a0kang.compare.http.service.CameraService;
 
 import java.util.List;
@@ -88,5 +85,14 @@ public class CompareController {
             return ApiReturnInfo.getFailure("相机品牌不存在");
         }
         return ApiReturnInfo.getSuccess(cameraBrandList);
+    }
+
+    @PostMapping("/search")
+    public ApiReturnInfo search(@RequestBody(required = false) SearchRequest request) {
+        if (null == request || StringUtil.isNullOrEmpty(request.getKeyword())) {
+            return ApiReturnInfo.getParamMissing();
+        }
+        List<Camera> cameraList = cameraService.search(request.getPage(), request.getPageSize(), request.getKeyword());
+        return ApiReturnInfo.getSuccess(cameraList);
     }
 }
