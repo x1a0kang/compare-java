@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.x1a0kang.compare.http.model.Camera;
 import org.x1a0kang.compare.http.model.CameraBrand;
+import org.x1a0kang.compare.http.model.CameraHotCategories;
 import org.x1a0kang.compare.http.model.CameraSpec;
 
 import java.util.ArrayList;
@@ -66,6 +67,12 @@ public class CameraService {
         Query query = new Query(Criteria.where("name").regex(keyword));
         query.skip(skip).limit(pageSize);
         return mongoTemplate.find(query, Camera.class, "camera");
+    }
+
+    public List<CameraHotCategories> getHotCategories(int page, int pageSize) {
+        int skip = (page - 1) * pageSize;
+        Query query = new Query().skip(skip).limit(pageSize);
+        return mongoTemplate.find(query, CameraHotCategories.class, "cameraHotCategories");
     }
 }
 

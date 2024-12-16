@@ -9,6 +9,7 @@ import org.x1a0kang.compare.common.model.ApiReturnInfo;
 import org.x1a0kang.compare.common.utils.StringUtil;
 import org.x1a0kang.compare.http.model.Camera;
 import org.x1a0kang.compare.http.model.CameraBrand;
+import org.x1a0kang.compare.http.model.CameraHotCategories;
 import org.x1a0kang.compare.http.model.CameraSpec;
 import org.x1a0kang.compare.http.model.request.*;
 import org.x1a0kang.compare.http.service.CameraService;
@@ -94,5 +95,11 @@ public class CompareController {
         }
         List<Camera> cameraList = cameraService.search(request.getPage(), request.getPageSize(), request.getKeyword());
         return ApiReturnInfo.getSuccess(cameraList);
+    }
+
+    @PostMapping("/getHotCategories")
+    public ApiReturnInfo getHotCategories(@RequestBody(required = false) PageRequest request) {
+        List<CameraHotCategories> cameraHotCategories = cameraService.getHotCategories(request.getPage(), request.getPageSize());
+        return ApiReturnInfo.getSuccess(cameraHotCategories);
     }
 }
