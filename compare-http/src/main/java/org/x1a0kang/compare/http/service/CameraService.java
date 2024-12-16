@@ -43,7 +43,7 @@ public class CameraService {
         return mongoTemplate.findAll(CameraSpec.class, "cameraSpec");
     }
 
-    public List<List<CameraBrand>> getBrand() {
+    public List<List<CameraBrand>> getBrandSplit() {
         List<CameraBrand> cameraBrand = mongoTemplate.findAll(CameraBrand.class, "cameraBrand");
         List<List<CameraBrand>> list = new ArrayList<>();
         int pageSize = 8;
@@ -62,6 +62,10 @@ public class CameraService {
         return list;
     }
 
+    public List<CameraBrand> getBrand() {
+        return mongoTemplate.findAll(CameraBrand.class, "cameraBrand");
+    }
+
     public List<Camera> search(int page, int pageSize, String keyword) {
         int skip = (page - 1) * pageSize;
         Query query = new Query(Criteria.where("name").regex(keyword));
@@ -73,6 +77,15 @@ public class CameraService {
         int skip = (page - 1) * pageSize;
         Query query = new Query().skip(skip).limit(pageSize);
         return mongoTemplate.find(query, CameraHotCategories.class, "cameraHotCategories");
+    }
+
+    public List<Camera> searchByFilter(int page, int pageSize, List<String> key, List<String> value) {
+        int skip = (page - 1) * pageSize;
+        Query query = new Query().skip(skip).limit(pageSize);
+        for (int i = 0; i < key.size(); i++) {
+            query.addCriteria(Criteria.where(key.get(i)).regex(value.get(i)));
+        }
+        return mongoTemplate.find(query, Camera.class, "camera");
     }
 }
 

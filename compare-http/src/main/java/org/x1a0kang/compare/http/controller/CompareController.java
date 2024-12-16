@@ -14,6 +14,7 @@ import org.x1a0kang.compare.http.model.CameraSpec;
 import org.x1a0kang.compare.http.model.request.*;
 import org.x1a0kang.compare.http.service.CameraService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -79,11 +80,20 @@ public class CompareController {
         return ApiReturnInfo.getSuccess(cameraSpecs);
     }
 
+    @PostMapping("/getBrandSplit")
+    public ApiReturnInfo getBrandSplit() {
+        List<List<CameraBrand>> cameraBrandList = cameraService.getBrandSplit();
+        if (StringUtil.isNullOrEmpty(cameraBrandList)) {
+            return ApiReturnInfo.getSuccess(new ArrayList<>());
+        }
+        return ApiReturnInfo.getSuccess(cameraBrandList);
+    }
+
     @PostMapping("/getBrand")
     public ApiReturnInfo getBrand() {
-        List<List<CameraBrand>> cameraBrandList = cameraService.getBrand();
+        List<CameraBrand> cameraBrandList = cameraService.getBrand();
         if (StringUtil.isNullOrEmpty(cameraBrandList)) {
-            return ApiReturnInfo.getFailure("相机品牌不存在");
+            return ApiReturnInfo.getSuccess(new ArrayList<>());
         }
         return ApiReturnInfo.getSuccess(cameraBrandList);
     }
@@ -101,5 +111,14 @@ public class CompareController {
     public ApiReturnInfo getHotCategories(@RequestBody(required = false) PageRequest request) {
         List<CameraHotCategories> cameraHotCategories = cameraService.getHotCategories(request.getPage(), request.getPageSize());
         return ApiReturnInfo.getSuccess(cameraHotCategories);
+    }
+
+    @PostMapping("/searchByFilter")
+    public ApiReturnInfo searchByFilter(@RequestBody(required = false) SearchByFilterRequest request) {
+        if (null == request) {
+            return ApiReturnInfo.getParamMissing();
+        }
+        List<Camera> cameraList = cameraService.searchByFilter(request.getPage(), request.getPageSize(), request.getKey(), request.getValue());
+        return ApiReturnInfo.getSuccess(cameraList);
     }
 }
