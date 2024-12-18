@@ -1,24 +1,17 @@
 package org.x1a0kang.compare.http.model;
 
-public class CameraSpec {
-    private String english;
-    private String chinese;
+import java.util.List;
+
+public class CameraSpec extends DataSelectEntity {
+    private List<DataSelectEntity> optionList;
     private String description;
 
-    public String getEnglish() {
-        return english;
+    public List<DataSelectEntity> getOptionList() {
+        return optionList;
     }
 
-    public void setEnglish(String english) {
-        this.english = english;
-    }
-
-    public String getChinese() {
-        return chinese;
-    }
-
-    public void setChinese(String chinese) {
-        this.chinese = chinese;
+    public void setOptionList(List<DataSelectEntity> optionList) {
+        this.optionList = optionList;
     }
 
     public String getDescription() {

@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 public class Camera {
     private String brand;
     private String name;
+    private String otherName;
     private String sensorSize;
     private double price;
     private String publishDate;
@@ -70,6 +71,14 @@ public class Camera {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getOtherName() {
+        return otherName;
+    }
+
+    public void setOtherName(String otherName) {
+        this.otherName = otherName;
     }
 
     public String getSensorSize() {

@@ -1,6 +1,8 @@
 package org.x1a0kang.compare.http.service;
 
 import jakarta.annotation.Resource;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -12,6 +14,7 @@ import org.x1a0kang.compare.http.model.CameraSpec;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 public class CameraService {
@@ -34,8 +37,7 @@ public class CameraService {
     }
 
     public List<Camera> getAll(int page, int pageSize) {
-        int skip = (page - 1) * pageSize;
-        Query query = new Query().skip(skip).limit(pageSize);
+        Query query = pageQuery(page, pageSize);
         return mongoTemplate.find(query, Camera.class, "camera");
     }
 
@@ -67,25 +69,32 @@ public class CameraService {
     }
 
     public List<Camera> search(int page, int pageSize, String keyword) {
-        int skip = (page - 1) * pageSize;
-        Query query = new Query(Criteria.where("name").regex(keyword));
-        query.skip(skip).limit(pageSize);
+        // TODO：现在先以产品名，品牌，别名，标签筛选，看有没有机会上ES吧
+        Query query = pageQuery(page, pageSize);
+        Pattern pattern = Pattern.compile(".*" + keyword + ".*", Pattern.CASE_INSENSITIVE);
+        query.addCriteria(new Criteria().orOperator(Criteria.where("brand").regex(pattern),
+                Criteria.where("name").regex(pattern),
+                Criteria.where("otherName").regex(pattern),
+                Criteria.where("tab").regex(pattern)));
         return mongoTemplate.find(query, Camera.class, "camera");
     }
 
     public List<CameraHotCategories> getHotCategories(int page, int pageSize) {
-        int skip = (page - 1) * pageSize;
-        Query query = new Query().skip(skip).limit(pageSize);
+        Query query = pageQuery(page, pageSize);
         return mongoTemplate.find(query, CameraHotCategories.class, "cameraHotCategories");
     }
 
     public List<Camera> searchByFilter(int page, int pageSize, List<String> key, List<String> value) {
-        int skip = (page - 1) * pageSize;
-        Query query = new Query().skip(skip).limit(pageSize);
+        Query query = pageQuery(page, pageSize);
         for (int i = 0; i < key.size(); i++) {
             query.addCriteria(Criteria.where(key.get(i)).regex(value.get(i)));
         }
         return mongoTemplate.find(query, Camera.class, "camera");
+    }
+
+    private Query pageQuery(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        return new Query().with(pageable);
     }
 }
 
