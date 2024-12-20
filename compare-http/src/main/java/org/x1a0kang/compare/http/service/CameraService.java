@@ -86,8 +86,19 @@ public class CameraService {
 
     public List<Camera> searchByFilter(int page, int pageSize, List<String> key, List<String> value) {
         Query query = pageQuery(page, pageSize);
+        Pattern pattern;
+        String searchKey = "all";
         for (int i = 0; i < key.size(); i++) {
-            query.addCriteria(Criteria.where(key.get(i)).regex(value.get(i)));
+            String str = key.get(i);
+            pattern = Pattern.compile(".*" + value.get(i) + ".*", Pattern.CASE_INSENSITIVE);
+            if (searchKey.equalsIgnoreCase(str)) {
+                query.addCriteria(new Criteria().orOperator(Criteria.where("brand").regex(pattern),
+                        Criteria.where("name").regex(pattern),
+                        Criteria.where("otherName").regex(pattern),
+                        Criteria.where("tab").regex(pattern)));
+            } else {
+                query.addCriteria(Criteria.where(key.get(i)).regex(pattern));
+            }
         }
         return mongoTemplate.find(query, Camera.class, "camera");
     }
