@@ -1,11 +1,10 @@
 package org.x1a0kang.compare.http.model;
 
-import java.util.Map;
-
 public class CameraHotCategories {
     private String name;
     private String coverUrl;
-    private Map<String, String> filter;
+    private String key;
+    private String value;
 
     public String getName() {
         return name;
@@ -23,11 +22,19 @@ public class CameraHotCategories {
         this.coverUrl = coverUrl;
     }
 
-    public Map<String, String> getFilter() {
-        return filter;
+    public String getKey() {
+        return key;
     }
 
-    public void setFilter(Map<String, String> filter) {
-        this.filter = filter;
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }
