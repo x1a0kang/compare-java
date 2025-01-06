@@ -3,6 +3,7 @@ package org.x1a0kang.compare.http.model;
 import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 public class Camera {
     private String brand;
@@ -43,6 +44,7 @@ public class Camera {
     private String weightWithBattery;
     private String productId;
     private long updateTime;
+    private List<String> imageList;
 
     public void generateId() {
         String temp = this.brand + this.name;
@@ -351,5 +353,13 @@ public class Camera {
 
     public void setUpdateTime(long updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public List<String> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(List<String> imageList) {
+        this.imageList = imageList;
     }
 }
