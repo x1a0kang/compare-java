@@ -17,73 +17,6 @@ public class ApiReturnInfo implements Serializable {
     private Object data;
     private Object stack;
 
-    /**
-     * 全局Id
-     * 作用：接口调用方生成的唯一id（如GUID），接口会入库并原样返回，方便后期做业务流程查询；
-     */
-    public String getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
-    }
-
-    /**
-     * 接口返回信息
-     */
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    /**
-     * 接口返回码，0：ok,-1：Failure(只有成功失败两种状态)
-     */
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    /**
-     * 接口状态码
-     */
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    /**
-     * 业务数据，Json格式
-     */
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
-
-    /**
-     * 透传第三方接口返回值，或者错误信息
-     */
-    public Object getStack() {
-        return stack;
-    }
-
-    public void setStack(Object value) {
-        stack = value;
-    }
-
     public ApiReturnInfo() {
     }
 
@@ -163,7 +96,7 @@ public class ApiReturnInfo implements Serializable {
     }
 
     public static ApiReturnInfo getParamMissing() {
-        return getParamMissing("Failure");
+        return getParamMissing("ParamMissing");
     }
 
     public static ApiReturnInfo getParamMissing(String message) {
@@ -228,5 +161,72 @@ public class ApiReturnInfo implements Serializable {
 
     public static ApiReturnInfo getNoAccess(String message) {
         return new ApiReturnInfo(null, StatusEnum.NoAccess, message);
+    }
+
+    /**
+     * 全局Id
+     * 作用：接口调用方生成的唯一id（如GUID），接口会入库并原样返回，方便后期做业务流程查询；
+     */
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
+
+    /**
+     * 接口返回信息
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    /**
+     * 接口返回码，0：ok,-1：Failure(只有成功失败两种状态)
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    /**
+     * 接口状态码
+     */
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    /**
+     * 业务数据，Json格式
+     */
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    /**
+     * 透传第三方接口返回值，或者错误信息
+     */
+    public Object getStack() {
+        return stack;
+    }
+
+    public void setStack(Object value) {
+        stack = value;
     }
 }

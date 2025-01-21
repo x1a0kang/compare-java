@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.x1a0kang.compare.common.model.ApiReturnInfo;
 import org.x1a0kang.compare.common.utils.StringUtil;
-import org.x1a0kang.compare.http.model.Camera;
-import org.x1a0kang.compare.http.model.CameraBrand;
-import org.x1a0kang.compare.http.model.CameraHotCategories;
-import org.x1a0kang.compare.http.model.CameraSpec;
+import org.x1a0kang.compare.http.model.*;
 import org.x1a0kang.compare.http.model.request.*;
 import org.x1a0kang.compare.http.service.CameraService;
 
@@ -120,5 +117,14 @@ public class CompareController {
         }
         List<Camera> cameraList = cameraService.searchByFilter(request.getPage(), request.getPageSize(), request.getKey(), request.getValue());
         return ApiReturnInfo.getSuccess(cameraList);
+    }
+
+    @PostMapping("/getOrderSpec")
+    public ApiReturnInfo getOrderSpec() {
+        List<OrderSpec> orderSpecList = cameraService.getOrderSpec();
+        if (StringUtil.isNullOrEmpty(orderSpecList)) {
+            return ApiReturnInfo.getSuccess(new ArrayList<>());
+        }
+        return ApiReturnInfo.getSuccess(orderSpecList);
     }
 }

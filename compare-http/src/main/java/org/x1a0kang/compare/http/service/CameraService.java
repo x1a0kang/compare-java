@@ -7,10 +7,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
-import org.x1a0kang.compare.http.model.Camera;
-import org.x1a0kang.compare.http.model.CameraBrand;
-import org.x1a0kang.compare.http.model.CameraHotCategories;
-import org.x1a0kang.compare.http.model.CameraSpec;
+import org.x1a0kang.compare.http.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +105,10 @@ public class CameraService {
     private Query pageQuery(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize);
         return new Query().with(pageable);
+    }
+
+    public List<OrderSpec> getOrderSpec() {
+        return mongoTemplate.findAll(OrderSpec.class, "orderSpec");
     }
 }
 
