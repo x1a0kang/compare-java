@@ -5,6 +5,8 @@ public class CameraHotCategories {
     private String coverUrl;
     private String key;
     private String value;
+    private String keyText;
+    private String valueText;
 
     public String getName() {
         return name;
@@ -36,5 +38,21 @@ public class CameraHotCategories {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getKeyText() {
+        return keyText;
+    }
+
+    public void setKeyText(String keyText) {
+        this.keyText = keyText;
+    }
+
+    public String getValueText() {
+        return valueText;
+    }
+
+    public void setValueText(String valueText) {
+        this.valueText = valueText;
     }
 }

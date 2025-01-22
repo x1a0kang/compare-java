@@ -3,11 +3,14 @@ package org.x1a0kang.compare.http.service;
 import jakarta.annotation.Resource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.x1a0kang.compare.common.utils.StringUtil;
 import org.x1a0kang.compare.http.model.*;
+import org.x1a0kang.compare.http.model.request.SearchByFilterRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,8 +84,20 @@ public class CameraService {
         return mongoTemplate.find(query, CameraHotCategories.class, "cameraHotCategories");
     }
 
-    public List<Camera> searchByFilter(int page, int pageSize, List<String> key, List<String> value) {
-        Query query = pageQuery(page, pageSize);
+    public List<Camera> searchByFilter(SearchByFilterRequest request) {
+        Query query = pageQuery(request.getPage(), request.getPageSize());
+        List<String> key = request.getKey();
+        List<String> value = request.getValue();
+        String orderKey = request.getOrderKey();
+        // 排序字段
+        if (StringUtil.isNotNullOrEmpty(orderKey)) {
+            if ("1".equals(request.getOrder())) {
+                query.with(Sort.by(Sort.Direction.ASC, orderKey));
+            } else {
+                query.with(Sort.by(Sort.Direction.DESC, orderKey));
+            }
+        }
+
         if (!key.isEmpty()) {
             Pattern pattern;
             String searchKey = "all";

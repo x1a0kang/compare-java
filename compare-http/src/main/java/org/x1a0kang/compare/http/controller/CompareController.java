@@ -115,7 +115,7 @@ public class CompareController {
         if (null == request) {
             return ApiReturnInfo.getParamMissing();
         }
-        List<Camera> cameraList = cameraService.searchByFilter(request.getPage(), request.getPageSize(), request.getKey(), request.getValue());
+        List<Camera> cameraList = cameraService.searchByFilter(request);
         return ApiReturnInfo.getSuccess(cameraList);
     }
 
