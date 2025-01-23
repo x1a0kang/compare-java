@@ -48,7 +48,7 @@ public class CameraService {
     public List<List<CameraBrand>> getBrandSplit() {
         List<CameraBrand> cameraBrand = mongoTemplate.findAll(CameraBrand.class, "cameraBrand");
         List<List<CameraBrand>> list = new ArrayList<>();
-        int pageSize = 8;
+        int pageSize = 5;
         List<CameraBrand> temp = new ArrayList<>();
         for (CameraBrand cameraBrandItem : cameraBrand) {
             if (temp.size() == pageSize) {
