@@ -1,6 +1,6 @@
 package org.x1a0kang.compare.http.model;
 
-public class CameraHotCategories {
+public class CameraCategories {
     private String name;
     private String coverUrl;
     private String key;

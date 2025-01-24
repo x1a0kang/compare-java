@@ -104,10 +104,10 @@ public class CompareController {
         return ApiReturnInfo.getSuccess(cameraList);
     }
 
-    @PostMapping("/getHotCategories")
-    public ApiReturnInfo getHotCategories(@RequestBody(required = false) PageRequest request) {
-        List<CameraHotCategories> cameraHotCategories = cameraService.getHotCategories(request.getPage(), request.getPageSize());
-        return ApiReturnInfo.getSuccess(cameraHotCategories);
+    @PostMapping("/getCategories")
+    public ApiReturnInfo getCategories(@RequestBody(required = false) PageRequest request) {
+        List<CameraCategories> cameraCategories = cameraService.getCategories(request.getPage(), request.getPageSize());
+        return ApiReturnInfo.getSuccess(cameraCategories);
     }
 
     @PostMapping("/searchByFilter")

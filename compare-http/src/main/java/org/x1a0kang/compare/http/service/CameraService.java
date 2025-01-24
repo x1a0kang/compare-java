@@ -79,9 +79,9 @@ public class CameraService {
         return mongoTemplate.find(query, Camera.class, "camera");
     }
 
-    public List<CameraHotCategories> getHotCategories(int page, int pageSize) {
+    public List<CameraCategories> getCategories(int page, int pageSize) {
         Query query = pageQuery(page, pageSize);
-        return mongoTemplate.find(query, CameraHotCategories.class, "cameraHotCategories");
+        return mongoTemplate.find(query, CameraCategories.class, "cameraCategories");
     }
 
     public List<Camera> searchByFilter(SearchByFilterRequest request) {
