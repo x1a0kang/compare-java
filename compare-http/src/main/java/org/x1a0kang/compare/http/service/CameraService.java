@@ -125,6 +125,10 @@ public class CameraService {
     public List<OrderSpec> getOrderSpec() {
         return mongoTemplate.findAll(OrderSpec.class, "orderSpec");
     }
+
+    public List<Banner> getBanner() {
+        return mongoTemplate.findAll(Banner.class, "banner");
+    }
 }
 
 

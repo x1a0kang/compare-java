@@ -127,4 +127,13 @@ public class CompareController {
         }
         return ApiReturnInfo.getSuccess(orderSpecList);
     }
+
+    @PostMapping("/getBanner")
+    public ApiReturnInfo getBanner() {
+        List<Banner> banner = cameraService.getBanner();
+        if (StringUtil.isNullOrEmpty(banner)) {
+            return ApiReturnInfo.getSuccess(new ArrayList<>());
+        }
+        return ApiReturnInfo.getSuccess(banner);
+    }
 }
