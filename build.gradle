@@ -132,8 +132,8 @@ subprojects {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
-    group = 'org.x1a0kang'
-    version = '0.0.1-SNAPSHOT'
+    group = 'shoes-relativity'
+    version = '1.0.0'
 
     java {
         toolchain {
@@ -141,8 +141,8 @@ subprojects {
         }
     }
 
-    project(':compare-http') { version = '0.0.1-SNAPSHOT' }           //服务1，接口服务
-    project(':compare-common') { version = '0.0.1-SNAPSHOT' }         //类库1，工具库组件
+    project(':compare-http') { version = '1.0.0' }           //服务1，接口服务
+    project(':compare-common') { version = '1.0.0' }         //类库1，工具库组件
 
     // java编译的时候缺省状态下会因为中文字符而失败
     [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
@@ -186,7 +186,7 @@ subprojects {
 
     task copyDependencies(type: Copy) {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-        group "eastmoney"
+        group "relativity"
         from configurations.compileClasspath
         into("${buildDir}/${buildType}/libs")
         from configurations.runtimeClasspath
@@ -194,13 +194,13 @@ subprojects {
     }
 
     task copyJar(type: Copy) {
-        group "eastmoney"
+        group "relativity"
         from "${buildDir}/libs"
         into "${buildDir}/${buildType}"
     }
 
     task copyShell(type: Copy) {
-        group "eastmoney"
+        group "relativity"
         from "${buildDir}/resources/main"
         include("*.sh", "app.bat", "banner.txt", "shell/*.sh", "shell/*.py")
         into "${buildDir}/${buildType}"
@@ -213,7 +213,7 @@ subprojects {
     }
 
     task copyConfig(type: Copy) {
-        group "eastmoney"
+        group "relativity"
         from "${buildDir}/resources/main"
         include("application.properties", "logback.xml", "logback-skywalking.xml", "customize_enhance.xml", "application-${buildType}.properties",
                 "application-chinese.properties", "workid_mapping.txt", "limit.lua", "taskinfo/*", "POC/*")
@@ -228,7 +228,7 @@ subprojects {
     }
 
     task zipAll(type: Zip) {
-        group "eastmoney"
+        group "relativity"
         delete "${project.name}-${project.version}-${buildType}.zip"
         destinationDirectory = file("${buildDir}/${buildType}")
         archiveFileName = "${project.name}-${project.version}-${buildType}.zip"
@@ -266,7 +266,4 @@ subprojects {
     }
 }
 
-// gradle  :app-robo-advisor-api:clean :app-robo-advisor-api:publish -P buildType=test -x test
-// gradle  :app-robo-advisor-sync-database:clean :app-robo-advisor-sync-database:publish -P buildType=dev -x test
-// gradle  :app-robo-advisor-sync-kafka:clean :app-robo-advisor-sync-kafka:publish -P buildType=release -x test
-// gradle  :app-robo-advisor-admin:clean :app-robo-advisor-admin:publish -P buildType=test -x test
+// gradle  :compare-http:clean :compare-http:publish -P buildType=local -x test
