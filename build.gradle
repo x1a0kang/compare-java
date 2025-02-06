@@ -33,16 +33,16 @@ ext {
         Xmx = '1g'
         Xms = '1g'
     } else if (buildType == 'dev') {
-        Xmx = '2g'
-        Xms = '2g'
+        Xmx = '1g'
+        Xms = '1g'
         //测试线和正式线需要多配一点内存，由于目前CI的机制，测试线和正式线的app.sh是共用的。
-    } else if (buildType == 'releasezp') {
-        Xmx = '8g'
-        Xms = '8g'
+    } else if (buildType == 'release') {
+        Xmx = '1g'
+        Xms = '1g'
         //测试线和正式线需要多配一点内存，由于目前CI的机制，测试线和正式线的app.sh是共用的。
     } else {
-        Xmx = '4g'
-        Xms = '4g'
+        Xmx = '1g'
+        Xms = '1g'
     }
 }
 
@@ -215,8 +215,8 @@ subprojects {
     task copyConfig(type: Copy) {
         group "relativity"
         from "${buildDir}/resources/main"
-        include("application.properties", "logback.xml", "logback-skywalking.xml", "customize_enhance.xml", "application-${buildType}.properties",
-                "application-chinese.properties", "workid_mapping.txt", "limit.lua", "taskinfo/*", "POC/*")
+        include("application.properties", "logback.xml", "application-${buildType}.properties",
+                "application-chinese.properties", "shoes-relativity.online.jks")
         into "${buildDir}/${buildType}/config"
         eachFile { fileCopyDetails ->
             // 只对文本文件应用过滤
