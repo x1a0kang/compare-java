@@ -216,7 +216,7 @@ subprojects {
         group "relativity"
         from "${buildDir}/resources/main"
         include("application.properties", "logback.xml", "application-${buildType}.properties",
-                "application-chinese.properties", "shoes-relativity.online.jks")
+                "application-chinese.properties")
         into "${buildDir}/${buildType}/config"
         eachFile { fileCopyDetails ->
             // 只对文本文件应用过滤
