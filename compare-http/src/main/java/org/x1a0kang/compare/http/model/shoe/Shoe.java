@@ -3,7 +3,14 @@ package org.x1a0kang.compare.http.model.shoe;
 import java.util.List;
 
 public class Shoe {
-    private String size;
+    private String _id;
+    private String name;
+    private String brand;
+    private String otherName;
+    // 鞋码，鞋长
+    private String length;
+    // 鞋宽，鞋楦
+    private String width;
     private Integer weight;
     private Integer toeHeight;
     private Integer heelHeight;
@@ -21,12 +28,52 @@ public class Shoe {
     private Integer price;
     private List<String> imageList;
 
-    public String getSize() {
-        return size;
+    public String getId() {
+        return _id;
     }
 
-    public void setSize(String size) {
-        this.size = size;
+    public void setId(String id) {
+        this._id = _id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getOtherName() {
+        return otherName;
+    }
+
+    public void setOtherName(String otherName) {
+        this.otherName = otherName;
+    }
+
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
+    }
+
+    public String getWidth() {
+        return width;
+    }
+
+    public void setWidth(String width) {
+        this.width = width;
     }
 
     public Integer getWeight() {

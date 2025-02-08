@@ -23,12 +23,12 @@ public class ShoeService {
     private MongoTemplate mongoTemplate;
 
     public Shoe getShoe(String id) {
-        Query query = new Query(Criteria.where("productId").is(id));
+        Query query = new Query(Criteria.where("_id").is(id));
         return mongoTemplate.findOne(query, Shoe.class, "shoe");
     }
 
     public List<Shoe> getShoeList(List<String> idList) {
-        Query query = new Query(Criteria.where("productId").in(idList));
+        Query query = new Query(Criteria.where("_id").in(idList));
         return mongoTemplate.find(query, Shoe.class, "shoe");
     }
 
