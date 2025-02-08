@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.x1a0kang.compare.common.model.ApiReturnInfo;
 import org.x1a0kang.compare.common.utils.StringUtil;
 import org.x1a0kang.compare.http.model.*;
+import org.x1a0kang.compare.http.model.camera.Camera;
+import org.x1a0kang.compare.http.model.camera.CameraBrand;
+import org.x1a0kang.compare.http.model.camera.CameraCategories;
+import org.x1a0kang.compare.http.model.camera.CameraSpec;
 import org.x1a0kang.compare.http.model.request.*;
 import org.x1a0kang.compare.http.service.CameraService;
 
@@ -16,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/camera")
-public class CompareController {
+public class CameraController {
     @Resource
     private CameraService cameraService;
 

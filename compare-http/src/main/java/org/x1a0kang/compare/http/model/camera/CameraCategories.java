@@ -1,4 +1,4 @@
-package org.x1a0kang.compare.http.model;
+package org.x1a0kang.compare.http.model.camera;
 
 public class CameraCategories {
     private String name;

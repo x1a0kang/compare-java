@@ -3,7 +3,6 @@ package org.x1a0kang.compare.http.script;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
-import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -11,7 +10,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 import org.x1a0kang.compare.common.utils.MongoUtil;
-import org.x1a0kang.compare.http.model.Camera;
+import org.x1a0kang.compare.http.model.camera.Camera;
 
 @Component
 public class LoadExcel {

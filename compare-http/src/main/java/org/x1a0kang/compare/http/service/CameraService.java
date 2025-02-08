@@ -10,6 +10,10 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.x1a0kang.compare.common.utils.StringUtil;
 import org.x1a0kang.compare.http.model.*;
+import org.x1a0kang.compare.http.model.camera.Camera;
+import org.x1a0kang.compare.http.model.camera.CameraBrand;
+import org.x1a0kang.compare.http.model.camera.CameraCategories;
+import org.x1a0kang.compare.http.model.camera.CameraSpec;
 import org.x1a0kang.compare.http.model.request.SearchByFilterRequest;
 
 import java.util.ArrayList;

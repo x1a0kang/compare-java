@@ -1,4 +1,6 @@
-package org.x1a0kang.compare.http.model;
+package org.x1a0kang.compare.http.model.camera;
+
+import org.x1a0kang.compare.http.model.DataSelectEntity;
 
 import java.util.List;
 
