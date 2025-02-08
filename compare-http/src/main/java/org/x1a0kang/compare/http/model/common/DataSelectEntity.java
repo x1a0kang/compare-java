@@ -1,4 +1,4 @@
-package org.x1a0kang.compare.http.model;
+package org.x1a0kang.compare.http.model.common;
 
 public class DataSelectEntity {
     private String value;

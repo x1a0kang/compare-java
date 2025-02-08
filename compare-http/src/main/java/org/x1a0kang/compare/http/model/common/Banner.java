@@ -1,4 +1,4 @@
-package org.x1a0kang.compare.http.model;
+package org.x1a0kang.compare.http.model.common;
 
 public class Banner extends DataSelectEntity {
     private String url;

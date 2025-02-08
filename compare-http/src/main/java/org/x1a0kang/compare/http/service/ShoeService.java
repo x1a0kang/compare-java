@@ -9,45 +9,45 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.x1a0kang.compare.common.utils.StringUtil;
-import org.x1a0kang.compare.http.model.camera.Camera;
 import org.x1a0kang.compare.http.model.common.*;
 import org.x1a0kang.compare.http.model.request.SearchByFilterRequest;
+import org.x1a0kang.compare.http.model.shoe.Shoe;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 @Service
-public class CameraService {
+public class ShoeService {
     @Resource
     private MongoTemplate mongoTemplate;
 
-    public Camera getCamera(String id) {
+    public Shoe getShoe(String id) {
         Query query = new Query(Criteria.where("productId").is(id));
-        return mongoTemplate.findOne(query, Camera.class, "camera");
+        return mongoTemplate.findOne(query, Shoe.class, "shoe");
     }
 
-    public List<Camera> getCameraList(List<String> idList) {
+    public List<Shoe> getShoeList(List<String> idList) {
         Query query = new Query(Criteria.where("productId").in(idList));
-        return mongoTemplate.find(query, Camera.class, "camera");
+        return mongoTemplate.find(query, Shoe.class, "shoe");
     }
 
-    public List<Camera> priceRange(double min, double max) {
+    public List<Shoe> priceRange(double min, double max) {
         Query query = new Query(Criteria.where("price").gte(min).lte(max));
-        return mongoTemplate.find(query, Camera.class, "camera");
+        return mongoTemplate.find(query, Shoe.class, "shoe");
     }
 
-    public List<Camera> getAll(int page, int pageSize) {
+    public List<Shoe> getAll(int page, int pageSize) {
         Query query = pageQuery(page, pageSize);
-        return mongoTemplate.find(query, Camera.class, "camera");
+        return mongoTemplate.find(query, Shoe.class, "shoe");
     }
 
     public List<Spec> getSpec() {
-        return mongoTemplate.findAll(Spec.class, "cameraSpec");
+        return mongoTemplate.findAll(Spec.class, "shoeSpec");
     }
 
     public List<List<Brand>> getBrandSplit() {
-        List<Brand> brand = mongoTemplate.findAll(Brand.class, "cameraBrand");
+        List<Brand> brand = mongoTemplate.findAll(Brand.class, "shoeBrand");
         List<List<Brand>> list = new ArrayList<>();
         int pageSize = 5;
         List<Brand> temp = new ArrayList<>();
@@ -66,26 +66,23 @@ public class CameraService {
     }
 
     public List<Brand> getBrand() {
-        return mongoTemplate.findAll(Brand.class, "cameraBrand");
+        return mongoTemplate.findAll(Brand.class, "shoeBrand");
     }
 
-    public List<Camera> search(int page, int pageSize, String keyword) {
+    public List<Shoe> search(int page, int pageSize, String keyword) {
         // TODO：现在先以产品名，品牌，别名，标签筛选，看有没有机会上ES吧
         Query query = pageQuery(page, pageSize);
         Pattern pattern = Pattern.compile(".*" + keyword + ".*", Pattern.CASE_INSENSITIVE);
-        query.addCriteria(new Criteria().orOperator(Criteria.where("brand").regex(pattern),
-                Criteria.where("name").regex(pattern),
-                Criteria.where("otherName").regex(pattern),
-                Criteria.where("tab").regex(pattern)));
-        return mongoTemplate.find(query, Camera.class, "camera");
+        query.addCriteria(new Criteria().orOperator(Criteria.where("brand").regex(pattern), Criteria.where("name").regex(pattern), Criteria.where("otherName").regex(pattern), Criteria.where("tab").regex(pattern)));
+        return mongoTemplate.find(query, Shoe.class, "shoe");
     }
 
     public List<Categories> getCategories(int page, int pageSize) {
         Query query = pageQuery(page, pageSize);
-        return mongoTemplate.find(query, Categories.class, "cameraCategories");
+        return mongoTemplate.find(query, Categories.class, "shoeCategories");
     }
 
-    public List<Camera> searchByFilter(SearchByFilterRequest request) {
+    public List<Shoe> searchByFilter(SearchByFilterRequest request) {
         Query query = pageQuery(request.getPage(), request.getPageSize());
         List<String> key = request.getKey();
         List<String> value = request.getValue();
@@ -106,16 +103,13 @@ public class CameraService {
                 String str = key.get(i);
                 pattern = Pattern.compile(".*" + value.get(i) + ".*", Pattern.CASE_INSENSITIVE);
                 if (searchKey.equalsIgnoreCase(str)) {
-                    query.addCriteria(new Criteria().orOperator(Criteria.where("brand").regex(pattern),
-                            Criteria.where("name").regex(pattern),
-                            Criteria.where("otherName").regex(pattern),
-                            Criteria.where("tab").regex(pattern)));
+                    query.addCriteria(new Criteria().orOperator(Criteria.where("brand").regex(pattern), Criteria.where("name").regex(pattern), Criteria.where("otherName").regex(pattern), Criteria.where("tab").regex(pattern)));
                 } else {
                     query.addCriteria(Criteria.where(key.get(i)).regex(pattern));
                 }
             }
         }
-        return mongoTemplate.find(query, Camera.class, "camera");
+        return mongoTemplate.find(query, Shoe.class, "shoe");
     }
 
     private Query pageQuery(int page, int pageSize) {
@@ -124,11 +118,11 @@ public class CameraService {
     }
 
     public List<OrderSpec> getOrderSpec() {
-        return mongoTemplate.findAll(OrderSpec.class, "orderSpec");
+        return mongoTemplate.findAll(OrderSpec.class, "shoeOrderSpec");
     }
 
     public List<Banner> getBanner() {
-        return mongoTemplate.findAll(Banner.class, "banner");
+        return mongoTemplate.findAll(Banner.class, "shoeBanner");
     }
 }
 

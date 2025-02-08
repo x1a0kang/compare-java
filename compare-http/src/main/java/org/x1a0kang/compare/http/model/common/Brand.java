@@ -1,8 +1,8 @@
-package org.x1a0kang.compare.http.model.camera;
+package org.x1a0kang.compare.http.model.common;
 
 import java.util.List;
 
-public class CameraBrand {
+public class Brand {
     private String english;
     private String chinese;
     private String icon;

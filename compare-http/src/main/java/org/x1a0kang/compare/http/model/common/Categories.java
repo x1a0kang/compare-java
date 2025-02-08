@@ -1,6 +1,6 @@
-package org.x1a0kang.compare.http.model.camera;
+package org.x1a0kang.compare.http.model.common;
 
-public class CameraCategories {
+public class Categories {
     private String name;
     private String coverUrl;
     private String key;

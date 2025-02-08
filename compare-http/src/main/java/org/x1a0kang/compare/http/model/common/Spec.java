@@ -1,10 +1,8 @@
-package org.x1a0kang.compare.http.model.camera;
-
-import org.x1a0kang.compare.http.model.DataSelectEntity;
+package org.x1a0kang.compare.http.model.common;
 
 import java.util.List;
 
-public class CameraSpec extends DataSelectEntity {
+public class Spec extends DataSelectEntity {
     private List<DataSelectEntity> optionList;
     private String description;
 
