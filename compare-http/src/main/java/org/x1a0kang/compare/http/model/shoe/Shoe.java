@@ -1,9 +1,12 @@
 package org.x1a0kang.compare.http.model.shoe;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.List;
 
 public class Shoe {
-    private String _id;
+    @Id
+    private String productId;
     private String name;
     private String brand;
     private String otherName;
@@ -27,13 +30,14 @@ public class Shoe {
     private String slowPace;
     private Integer price;
     private List<String> imageList;
+    private String publishDate;
 
-    public String getId() {
-        return _id;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setId(String id) {
-        this._id = _id;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getName() {
@@ -170,5 +174,13 @@ public class Shoe {
 
     public void setImageList(List<String> imageList) {
         this.imageList = imageList;
+    }
+
+    public String getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(String publishDate) {
+        this.publishDate = publishDate;
     }
 }

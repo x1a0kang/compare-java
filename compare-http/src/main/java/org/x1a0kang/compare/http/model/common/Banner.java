@@ -2,7 +2,7 @@ package org.x1a0kang.compare.http.model.common;
 
 public class Banner extends DataSelectEntity {
     private String url;
-    private String id;
+    private String productId;
     private String name;
 
     public String getUrl() {
@@ -13,12 +13,12 @@ public class Banner extends DataSelectEntity {
         this.url = url;
     }
 
-    public String getId() {
-        return id;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getName() {

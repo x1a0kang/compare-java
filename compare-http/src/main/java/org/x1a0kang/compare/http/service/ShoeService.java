@@ -49,7 +49,7 @@ public class ShoeService {
     public List<List<Brand>> getBrandSplit() {
         List<Brand> brand = mongoTemplate.findAll(Brand.class, "shoeBrand");
         List<List<Brand>> list = new ArrayList<>();
-        int pageSize = 5;
+        int pageSize = 10;
         List<Brand> temp = new ArrayList<>();
         for (Brand brandItem : brand) {
             if (temp.size() == pageSize) {

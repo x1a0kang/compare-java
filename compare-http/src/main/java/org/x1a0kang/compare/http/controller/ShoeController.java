@@ -26,11 +26,11 @@ public class ShoeController {
         if (null == request) {
             return ApiReturnInfo.getParamMissing();
         }
-        List<Shoe> cameraList = shoeService.getAll(request.getPage(), request.getPageSize());
-        if (StringUtil.isNullOrEmpty(cameraList)) {
+        List<Shoe> shoeList = shoeService.getAll(request.getPage(), request.getPageSize());
+        if (StringUtil.isNullOrEmpty(shoeList)) {
             return ApiReturnInfo.getFailure("跑鞋不存在");
         }
-        return ApiReturnInfo.getSuccess(cameraList);
+        return ApiReturnInfo.getSuccess(shoeList);
     }
 
     @PostMapping("/getOne")
@@ -38,11 +38,11 @@ public class ShoeController {
         if (null == request || StringUtil.isNullOrEmpty(request.getId())) {
             return ApiReturnInfo.getParamMissing();
         }
-        Shoe camera = shoeService.getShoe(request.getId());
-        if (camera == null) {
+        Shoe shoe = shoeService.getShoe(request.getId());
+        if (shoe == null) {
             return ApiReturnInfo.getFailure("跑鞋不存在");
         }
-        return ApiReturnInfo.getSuccess(camera);
+        return ApiReturnInfo.getSuccess(shoe);
     }
 
     @PostMapping("/getListById")
@@ -50,11 +50,11 @@ public class ShoeController {
         if (null == request || StringUtil.isNullOrEmpty(request.getIdList())) {
             return ApiReturnInfo.getParamMissing();
         }
-        List<Shoe> cameraList = shoeService.getShoeList(request.getIdList());
-        if (StringUtil.isNullOrEmpty(cameraList)) {
+        List<Shoe> shoeList = shoeService.getShoeList(request.getIdList());
+        if (StringUtil.isNullOrEmpty(shoeList)) {
             return ApiReturnInfo.getFailure("跑鞋不存在");
         }
-        return ApiReturnInfo.getSuccess(cameraList);
+        return ApiReturnInfo.getSuccess(shoeList);
     }
 
     @PostMapping("/getPriceRange")
@@ -62,11 +62,11 @@ public class ShoeController {
         if (null == request) {
             return ApiReturnInfo.getParamMissing();
         }
-        List<Shoe> cameras = shoeService.priceRange(request.getMin(), request.getMax());
-        if (StringUtil.isNullOrEmpty(cameras)) {
+        List<Shoe> shoes = shoeService.priceRange(request.getMin(), request.getMax());
+        if (StringUtil.isNullOrEmpty(shoes)) {
             return ApiReturnInfo.getFailure("跑鞋不存在");
         }
-        return ApiReturnInfo.getSuccess(cameras);
+        return ApiReturnInfo.getSuccess(shoes);
     }
 
     @PostMapping("/getSpec")
@@ -80,11 +80,11 @@ public class ShoeController {
 
     @PostMapping("/getBrandSplit")
     public ApiReturnInfo getBrandSplit() {
-        List<List<Brand>> cameraBrandList = shoeService.getBrandSplit();
-        if (StringUtil.isNullOrEmpty(cameraBrandList)) {
+        List<List<Brand>> shoeBrandList = shoeService.getBrandSplit();
+        if (StringUtil.isNullOrEmpty(shoeBrandList)) {
             return ApiReturnInfo.getSuccess(new ArrayList<>());
         }
-        return ApiReturnInfo.getSuccess(cameraBrandList);
+        return ApiReturnInfo.getSuccess(shoeBrandList);
     }
 
     @PostMapping("/getBrand")
@@ -101,8 +101,8 @@ public class ShoeController {
         if (null == request || StringUtil.isNullOrEmpty(request.getKeyword())) {
             return ApiReturnInfo.getParamMissing();
         }
-        List<Shoe> cameraList = shoeService.search(request.getPage(), request.getPageSize(), request.getKeyword());
-        return ApiReturnInfo.getSuccess(cameraList);
+        List<Shoe> shoeList = shoeService.search(request.getPage(), request.getPageSize(), request.getKeyword());
+        return ApiReturnInfo.getSuccess(shoeList);
     }
 
     @PostMapping("/getCategories")
@@ -116,8 +116,8 @@ public class ShoeController {
         if (null == request) {
             return ApiReturnInfo.getParamMissing();
         }
-        List<Shoe> cameraList = shoeService.searchByFilter(request);
-        return ApiReturnInfo.getSuccess(cameraList);
+        List<Shoe> shoeList = shoeService.searchByFilter(request);
+        return ApiReturnInfo.getSuccess(shoeList);
     }
 
     @PostMapping("/getOrderSpec")
