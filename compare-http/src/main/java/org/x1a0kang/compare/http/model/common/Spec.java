@@ -5,6 +5,7 @@ import java.util.List;
 public class Spec extends DataSelectEntity {
     private List<DataSelectEntity> optionList;
     private String description;
+    private String unit;
 
     public List<DataSelectEntity> getOptionList() {
         return optionList;
@@ -20,5 +21,13 @@ public class Spec extends DataSelectEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }
