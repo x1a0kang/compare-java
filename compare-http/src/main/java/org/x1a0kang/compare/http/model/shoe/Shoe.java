@@ -2,6 +2,7 @@ package org.x1a0kang.compare.http.model.shoe;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.Date;
 import java.util.List;
 
 public class Shoe {
@@ -26,11 +27,14 @@ public class Shoe {
     private String upper;
     // 板材
     private String plate;
-    private String fastPace;
-    private String slowPace;
+    private String fastPaceStr;
+    private Integer fastPace;
+    private String slowPaceStr;
+    private Integer slowPace;
     private Integer price;
     private List<String> imageList;
-    private String publishDate;
+    private String publishDateStr;
+    private Date publishDate;
 
     public String getProductId() {
         return productId;
@@ -144,20 +148,20 @@ public class Shoe {
         this.plate = plate;
     }
 
-    public String getFastPace() {
-        return fastPace;
+    public String getFastPaceStr() {
+        return fastPaceStr;
     }
 
-    public void setFastPace(String fastPace) {
-        this.fastPace = fastPace;
+    public void setFastPaceStr(String fastPaceStr) {
+        this.fastPaceStr = fastPaceStr;
     }
 
-    public String getSlowPace() {
-        return slowPace;
+    public String getSlowPaceStr() {
+        return slowPaceStr;
     }
 
-    public void setSlowPace(String slowPace) {
-        this.slowPace = slowPace;
+    public void setSlowPaceStr(String slowPaceStr) {
+        this.slowPaceStr = slowPaceStr;
     }
 
     public Integer getPrice() {
@@ -176,11 +180,35 @@ public class Shoe {
         this.imageList = imageList;
     }
 
-    public String getPublishDate() {
+    public String getPublishDateStr() {
+        return publishDateStr;
+    }
+
+    public void setPublishDateStr(String publishDateStr) {
+        this.publishDateStr = publishDateStr;
+    }
+
+    public Date getPublishDate() {
         return publishDate;
     }
 
-    public void setPublishDate(String publishDate) {
+    public void setPublishDate(Date publishDate) {
         this.publishDate = publishDate;
+    }
+
+    public Integer getFastPace() {
+        return fastPace;
+    }
+
+    public void setFastPace(Integer fastPace) {
+        this.fastPace = fastPace;
+    }
+
+    public Integer getSlowPace() {
+        return slowPace;
+    }
+
+    public void setSlowPace(Integer slowPace) {
+        this.slowPace = slowPace;
     }
 }

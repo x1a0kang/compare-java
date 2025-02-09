@@ -87,6 +87,7 @@ public class ShoeService {
         List<String> key = request.getKey();
         List<String> value = request.getValue();
         String orderKey = request.getOrderKey();
+
         // 排序字段
         if (StringUtil.isNotNullOrEmpty(orderKey)) {
             if ("1".equals(request.getOrder())) {
