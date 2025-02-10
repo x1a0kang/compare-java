@@ -1,6 +1,5 @@
 package org.x1a0kang.compare.http.service;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -37,12 +36,14 @@ public class CountService {
         mongoTemplate.upsert(query, update, Count.class, "shoeCount");
     }
 
-    public void addPk(String id) {
-        Query query = new Query(Criteria.where("productId").is(id));
-        Update update = new Update();
-        update.inc("totalPk", 1);
-        update.inc("todayPk", 1);
-        mongoTemplate.upsert(query, update, Count.class, "shoeCount");
+    public void addPk(List<String> idList) {
+        for (String id : idList) {
+            Query query = new Query(Criteria.where("productId").is(id));
+            Update update = new Update();
+            update.inc("totalPk", 1);
+            update.inc("todayPk", 1);
+            mongoTemplate.upsert(query, update, Count.class, "shoeCount");
+        }
     }
 
     public List<Count> getHotRank(int page, int pageSize) {
@@ -52,7 +53,7 @@ public class CountService {
     }
 
     @Scheduled(cron = "0 0 */1 * * ?")
-    @PostConstruct
+//    @PostConstruct
     public void calHot() {
         List<Count> shoeCountList = mongoTemplate.findAll(Count.class, "shoeCount");
         int hot;

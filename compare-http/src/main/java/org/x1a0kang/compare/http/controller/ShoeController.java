@@ -175,11 +175,11 @@ public class ShoeController {
     }
 
     @PostMapping("/pkCount")
-    public ApiReturnInfo pkCount(@RequestBody(required = false) IdRequest request) {
-        if (null == request || StringUtil.isNullOrEmpty(request.getId())) {
+    public ApiReturnInfo pkCount(@RequestBody(required = false) IdListRequest request) {
+        if (null == request || StringUtil.isNullOrEmpty(request.getIdList())) {
             return ApiReturnInfo.getParamMissing();
         }
-        countService.addPk(request.getId());
+        countService.addPk(request.getIdList());
         return ApiReturnInfo.getSuccess();
     }
 }
