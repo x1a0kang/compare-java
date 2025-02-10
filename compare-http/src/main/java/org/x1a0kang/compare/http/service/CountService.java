@@ -58,7 +58,7 @@ public class CountService {
         List<Count> shoeCountList = mongoTemplate.findAll(Count.class, "shoeCount");
         int hot;
         long time = System.currentTimeMillis();
-        String timeStr = JodaDateUtil.longToDateStr(time, JodaDateUtil.Pattern.yyyy_MM_dd_HH_mm_ss);
+        String timeStr = JodaDateUtil.longToDateStr(time, JodaDateUtil.Pattern.yyyy_MM_dd_HH_mm);
 
         for (Count shoeCount : shoeCountList) {
             // 前天：昨天：今天=1:1:3
