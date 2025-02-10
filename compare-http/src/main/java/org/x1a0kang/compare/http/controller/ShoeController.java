@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.x1a0kang.compare.common.model.ApiReturnInfo;
-import org.x1a0kang.compare.common.utils.JodaDateUtil;
 import org.x1a0kang.compare.common.utils.StringUtil;
 import org.x1a0kang.compare.http.model.common.*;
 import org.x1a0kang.compare.http.model.request.*;
 import org.x1a0kang.compare.http.model.shoe.Shoe;
+import org.x1a0kang.compare.http.service.CountService;
 import org.x1a0kang.compare.http.service.ShoeService;
 
 import java.util.ArrayList;
@@ -21,6 +21,8 @@ import java.util.List;
 public class ShoeController {
     @Resource
     private ShoeService shoeService;
+    @Resource
+    private CountService countService;
 
     @PostMapping("/getAll")
     public ApiReturnInfo getAll(@RequestBody(required = false) PageRequest request) {
@@ -108,6 +110,9 @@ public class ShoeController {
 
     @PostMapping("/getCategories")
     public ApiReturnInfo getCategories(@RequestBody(required = false) PageRequest request) {
+        if (null == request) {
+            return ApiReturnInfo.getParamMissing();
+        }
         List<Categories> categories = shoeService.getCategories(request.getPage(), request.getPageSize());
         return ApiReturnInfo.getSuccess(categories);
     }
@@ -137,5 +142,44 @@ public class ShoeController {
             return ApiReturnInfo.getSuccess(new ArrayList<>());
         }
         return ApiReturnInfo.getSuccess(banner);
+    }
+
+    @PostMapping("/getHotRank")
+    public ApiReturnInfo getHotRank(@RequestBody(required = false) PageRequest request) {
+        if (null == request) {
+            return ApiReturnInfo.getParamMissing();
+        }
+        List<Shoe> hotRank = shoeService.getHotRank(request.getPage(), request.getPageSize());
+        if (StringUtil.isNullOrEmpty(hotRank)) {
+            return ApiReturnInfo.getSuccess(new ArrayList<>());
+        }
+        return ApiReturnInfo.getSuccess(hotRank);
+    }
+
+    @PostMapping("/viewCount")
+    public ApiReturnInfo viewCount(@RequestBody(required = false) IdRequest request) {
+        if (null == request || StringUtil.isNullOrEmpty(request.getId())) {
+            return ApiReturnInfo.getParamMissing();
+        }
+        countService.addView(request.getId());
+        return ApiReturnInfo.getSuccess();
+    }
+
+    @PostMapping("/addPkCount")
+    public ApiReturnInfo addPkCount(@RequestBody(required = false) IdRequest request) {
+        if (null == request || StringUtil.isNullOrEmpty(request.getId())) {
+            return ApiReturnInfo.getParamMissing();
+        }
+        countService.addAddPk(request.getId());
+        return ApiReturnInfo.getSuccess();
+    }
+
+    @PostMapping("/pkCount")
+    public ApiReturnInfo pkCount(@RequestBody(required = false) IdRequest request) {
+        if (null == request || StringUtil.isNullOrEmpty(request.getId())) {
+            return ApiReturnInfo.getParamMissing();
+        }
+        countService.addPk(request.getId());
+        return ApiReturnInfo.getSuccess();
     }
 }

@@ -35,6 +35,8 @@ public class Shoe {
     private List<String> imageList;
     private String publishDateStr;
     private Date publishDate;
+    private Integer hot;
+    private String hotUpdateTimeStr;
 
     public String getProductId() {
         return productId;
@@ -210,5 +212,21 @@ public class Shoe {
 
     public void setSlowPace(Integer slowPace) {
         this.slowPace = slowPace;
+    }
+
+    public String getHotUpdateTimeStr() {
+        return hotUpdateTimeStr;
+    }
+
+    public void setHotUpdateTimeStr(String hotUpdateTimeStr) {
+        this.hotUpdateTimeStr = hotUpdateTimeStr;
+    }
+
+    public Integer getHot() {
+        return hot;
+    }
+
+    public void setHot(Integer hot) {
+        this.hot = hot;
     }
 }

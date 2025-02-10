@@ -1,4 +1,4 @@
-package org.x1a0kang.comparehttp;
+package org.x1a0kang.compare.http;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

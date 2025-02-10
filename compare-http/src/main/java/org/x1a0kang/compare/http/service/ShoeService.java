@@ -21,6 +21,8 @@ import java.util.regex.Pattern;
 public class ShoeService {
     @Resource
     private MongoTemplate mongoTemplate;
+    @Resource
+    private CountService countService;
 
     public Shoe getShoe(String id) {
         Query query = new Query(Criteria.where("_id").is(id));
@@ -111,6 +113,20 @@ public class ShoeService {
             }
         }
         return mongoTemplate.find(query, Shoe.class, "shoe");
+    }
+
+    public List<Shoe> getHotRank(int page, int pageSize) {
+        List<Count> hotRank = countService.getHotRank(page, pageSize);
+        List<String> idList = new ArrayList<>();
+        for (Count count : hotRank) {
+            idList.add(count.getProductId());
+        }
+        List<Shoe> shoeList = getShoeList(idList);
+        for (int i = 0; i < shoeList.size(); i++) {
+            shoeList.get(i).setHot(hotRank.get(i).getHot());
+            shoeList.get(i).setHotUpdateTimeStr(hotRank.get(i).getUpdateTimeStr());
+        }
+        return shoeList;
     }
 
     private Query pageQuery(int page, int pageSize) {
