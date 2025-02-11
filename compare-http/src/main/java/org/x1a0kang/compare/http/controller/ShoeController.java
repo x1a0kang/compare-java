@@ -10,6 +10,7 @@ import org.x1a0kang.compare.common.utils.StringUtil;
 import org.x1a0kang.compare.http.model.common.*;
 import org.x1a0kang.compare.http.model.request.*;
 import org.x1a0kang.compare.http.model.shoe.Shoe;
+import org.x1a0kang.compare.http.model.shoe.ShoeDetail;
 import org.x1a0kang.compare.http.service.CountService;
 import org.x1a0kang.compare.http.service.ShoeService;
 
@@ -48,6 +49,18 @@ public class ShoeController {
         return ApiReturnInfo.getSuccess(shoe);
     }
 
+    @PostMapping("/getOneDetail")
+    public ApiReturnInfo getOneDetail(@RequestBody(required = false) IdRequest request) {
+        if (null == request || StringUtil.isNullOrEmpty(request.getId())) {
+            return ApiReturnInfo.getParamMissing();
+        }
+        ShoeDetail shoeDetail = shoeService.getShoeDetail(request.getId());
+        if (shoeDetail == null) {
+            return ApiReturnInfo.getFailure("跑鞋不存在");
+        }
+        return ApiReturnInfo.getSuccess(shoeDetail);
+    }
+
     @PostMapping("/getListById")
     public ApiReturnInfo getListById(@RequestBody(required = false) IdListRequest request) {
         if (null == request || StringUtil.isNullOrEmpty(request.getIdList())) {
@@ -58,6 +71,18 @@ public class ShoeController {
             return ApiReturnInfo.getFailure("跑鞋不存在");
         }
         return ApiReturnInfo.getSuccess(shoeList);
+    }
+
+    @PostMapping("/getDetailListById")
+    public ApiReturnInfo getDetailListById(@RequestBody(required = false) IdListRequest request) {
+        if (null == request || StringUtil.isNullOrEmpty(request.getIdList())) {
+            return ApiReturnInfo.getParamMissing();
+        }
+        List<ShoeDetail> shoeDetailList = shoeService.getShoeDetailList(request.getIdList());
+        if (StringUtil.isNullOrEmpty(shoeDetailList)) {
+            return ApiReturnInfo.getFailure("跑鞋不存在");
+        }
+        return ApiReturnInfo.getSuccess(shoeDetailList);
     }
 
     @PostMapping("/getPriceRange")

@@ -12,6 +12,7 @@ import org.x1a0kang.compare.common.utils.StringUtil;
 import org.x1a0kang.compare.http.model.common.*;
 import org.x1a0kang.compare.http.model.request.SearchByFilterRequest;
 import org.x1a0kang.compare.http.model.shoe.Shoe;
+import org.x1a0kang.compare.http.model.shoe.ShoeDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +30,19 @@ public class ShoeService {
         return mongoTemplate.findOne(query, Shoe.class, "shoe");
     }
 
+    public ShoeDetail getShoeDetail(String id) {
+        Query query = new Query(Criteria.where("_id").is(id));
+        return mongoTemplate.findOne(query, ShoeDetail.class, "shoe");
+    }
+
     public List<Shoe> getShoeList(List<String> idList) {
         Query query = new Query(Criteria.where("_id").in(idList));
         return mongoTemplate.find(query, Shoe.class, "shoe");
+    }
+
+    public List<ShoeDetail> getShoeDetailList(List<String> idList) {
+        Query query = new Query(Criteria.where("_id").in(idList));
+        return mongoTemplate.find(query, ShoeDetail.class, "shoe");
     }
 
     public List<Shoe> priceRange(double min, double max) {
@@ -99,7 +110,7 @@ public class ShoeService {
             }
         }
 
-        if (!key.isEmpty()) {
+        if (StringUtil.isNotNullOrEmpty(key)) {
             Pattern pattern;
             String searchKey = "all";
             for (int i = 0; i < key.size(); i++) {
@@ -123,7 +134,7 @@ public class ShoeService {
         }
         List<Shoe> shoeList = getShoeList(idList);
         for (int i = 0; i < shoeList.size(); i++) {
-            shoeList.get(i).setHot(hotRank.get(i).getHot());
+//            shoeSimpleList.get(i).setHot(hotRank.get(i).getHot());
             shoeList.get(i).setHotUpdateTimeStr(hotRank.get(i).getUpdateTimeStr());
         }
         return shoeList;
