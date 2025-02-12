@@ -2,22 +2,22 @@ package org.x1a0kang.compare.http.model.common;
 
 public class Count {
     private String productId;
-    private Integer totalView;
-    private Integer todayView;
-    private Integer yesterdayView;
-    private Integer twoYesterdayView;
+    private int totalView;
+    private int todayView;
+    private int yesterdayView;
+    private int twoYesterdayView;
 
-    private Integer totalAddPk;
-    private Integer todayAddPk;
-    private Integer yesterdayAddPk;
-    private Integer twoYesterdayAddPk;
+    private int totalAddPk;
+    private int todayAddPk;
+    private int yesterdayAddPk;
+    private int twoYesterdayAddPk;
 
-    private Integer totalPk;
-    private Integer todayPk;
-    private Integer yesterdayPk;
-    private Integer twoYesterdayPk;
+    private int totalPk;
+    private int todayPk;
+    private int yesterdayPk;
+    private int twoYesterdayPk;
 
-    private Integer hot;
+    private int hot;
     private String updateTimeStr;
     private long updateTimeStamp;
 
@@ -29,107 +29,107 @@ public class Count {
         this.productId = productId;
     }
 
-    public Integer getTotalView() {
+    public int getTotalView() {
         return totalView;
     }
 
-    public void setTotalView(Integer totalView) {
+    public void setTotalView(int totalView) {
         this.totalView = totalView;
     }
 
-    public Integer getTodayView() {
+    public int getTodayView() {
         return todayView;
     }
 
-    public void setTodayView(Integer todayView) {
+    public void setTodayView(int todayView) {
         this.todayView = todayView;
     }
 
-    public Integer getYesterdayView() {
+    public int getYesterdayView() {
         return yesterdayView;
     }
 
-    public void setYesterdayView(Integer yesterdayView) {
+    public void setYesterdayView(int yesterdayView) {
         this.yesterdayView = yesterdayView;
     }
 
-    public Integer getTwoYesterdayView() {
+    public int getTwoYesterdayView() {
         return twoYesterdayView;
     }
 
-    public void setTwoYesterdayView(Integer twoYesterdayView) {
+    public void setTwoYesterdayView(int twoYesterdayView) {
         this.twoYesterdayView = twoYesterdayView;
     }
 
-    public Integer getTotalAddPk() {
+    public int getTotalAddPk() {
         return totalAddPk;
     }
 
-    public void setTotalAddPk(Integer totalAddPk) {
+    public void setTotalAddPk(int totalAddPk) {
         this.totalAddPk = totalAddPk;
     }
 
-    public Integer getTodayAddPk() {
+    public int getTodayAddPk() {
         return todayAddPk;
     }
 
-    public void setTodayAddPk(Integer todayAddPk) {
+    public void setTodayAddPk(int todayAddPk) {
         this.todayAddPk = todayAddPk;
     }
 
-    public Integer getYesterdayAddPk() {
+    public int getYesterdayAddPk() {
         return yesterdayAddPk;
     }
 
-    public void setYesterdayAddPk(Integer yesterdayAddPk) {
+    public void setYesterdayAddPk(int yesterdayAddPk) {
         this.yesterdayAddPk = yesterdayAddPk;
     }
 
-    public Integer getTwoYesterdayAddPk() {
+    public int getTwoYesterdayAddPk() {
         return twoYesterdayAddPk;
     }
 
-    public void setTwoYesterdayAddPk(Integer twoYesterdayAddPk) {
+    public void setTwoYesterdayAddPk(int twoYesterdayAddPk) {
         this.twoYesterdayAddPk = twoYesterdayAddPk;
     }
 
-    public Integer getTotalPk() {
+    public int getTotalPk() {
         return totalPk;
     }
 
-    public void setTotalPk(Integer totalPk) {
+    public void setTotalPk(int totalPk) {
         this.totalPk = totalPk;
     }
 
-    public Integer getTodayPk() {
+    public int getTodayPk() {
         return todayPk;
     }
 
-    public void setTodayPk(Integer todayPk) {
+    public void setTodayPk(int todayPk) {
         this.todayPk = todayPk;
     }
 
-    public Integer getYesterdayPk() {
+    public int getYesterdayPk() {
         return yesterdayPk;
     }
 
-    public void setYesterdayPk(Integer yesterdayPk) {
+    public void setYesterdayPk(int yesterdayPk) {
         this.yesterdayPk = yesterdayPk;
     }
 
-    public Integer getTwoYesterdayPk() {
+    public int getTwoYesterdayPk() {
         return twoYesterdayPk;
     }
 
-    public void setTwoYesterdayPk(Integer twoYesterdayPk) {
+    public void setTwoYesterdayPk(int twoYesterdayPk) {
         this.twoYesterdayPk = twoYesterdayPk;
     }
 
-    public Integer getHot() {
+    public int getHot() {
         return hot;
     }
 
-    public void setHot(Integer hot) {
+    public void setHot(int hot) {
         this.hot = hot;
     }
 

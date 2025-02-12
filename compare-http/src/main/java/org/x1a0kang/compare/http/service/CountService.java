@@ -48,7 +48,7 @@ public class CountService {
 
     public List<Count> getHotRank(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize);
-        Query query = new Query().with(Sort.by(Sort.Direction.DESC, "hot")).with(pageable);
+        Query query = new Query(Criteria.where("productId").ne(null)).with(Sort.by(Sort.Direction.DESC, "hot")).with(pageable);
         return mongoTemplate.find(query, Count.class, "shoeCount");
     }
 
