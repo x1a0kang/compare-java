@@ -21,9 +21,6 @@ sed -i "s/\r//g" $(
   pwd
 )/config/application-*.properties
 
-WORKER_ID=$(grep "$local_ip" "config/workid_mapping.txt" | awk '{print $2}')
-sed -i "s|workerId=.*|workerId=${WORKER_ID}|g" "$(cd $(dirname $0) && pwd)/config/application.properties"
-
 # 查询程序运行pid,运行的程序名
 get_run_state() {
   pid=$(jps -l | grep ${projName} | awk '{print $1}')

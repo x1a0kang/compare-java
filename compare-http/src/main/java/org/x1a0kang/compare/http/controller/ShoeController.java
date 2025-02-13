@@ -1,10 +1,7 @@
 package org.x1a0kang.compare.http.controller;
 
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.x1a0kang.compare.common.model.ApiReturnInfo;
 import org.x1a0kang.compare.common.utils.StringUtil;
 import org.x1a0kang.compare.http.model.common.*;
@@ -24,6 +21,11 @@ public class ShoeController {
     private ShoeService shoeService;
     @Resource
     private CountService countService;
+
+    @GetMapping("/health")
+    public ApiReturnInfo health() {
+        return ApiReturnInfo.getSuccess();
+    }
 
     @PostMapping("/getAll")
     public ApiReturnInfo getAll(@RequestBody(required = false) PageRequest request) {
