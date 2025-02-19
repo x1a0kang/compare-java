@@ -31,6 +31,10 @@ public class ShoeDetail {
     private Integer fastPace;
     private String slowPaceStr;
     private Integer slowPace;
+    // 距离
+    private Double distance;
+    private String runnerWeight;
+    private String position;
     private Integer price;
     private List<String> imageList;
     private String publishDateStr;
@@ -164,6 +168,30 @@ public class ShoeDetail {
 
     public void setSlowPaceStr(String slowPaceStr) {
         this.slowPaceStr = slowPaceStr;
+    }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
+    }
+
+    public String getRunnerWeight() {
+        return runnerWeight;
+    }
+
+    public void setRunnerWeight(String runnerWeight) {
+        this.runnerWeight = runnerWeight;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public Integer getPrice() {
