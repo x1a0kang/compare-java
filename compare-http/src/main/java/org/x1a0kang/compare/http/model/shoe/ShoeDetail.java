@@ -16,9 +16,9 @@ public class ShoeDetail {
     // 鞋宽，鞋楦
     private String width;
     private Integer weight;
-    private Integer toeHeight;
-    private Integer heelHeight;
-    private Integer heelToeDrop;
+    private Float toeHeight;
+    private Float heelHeight;
+    private Float heelToeDrop;
     // 中底材料
     private String midsole;
     // 中底结构
@@ -27,6 +27,8 @@ public class ShoeDetail {
     private String upper;
     // 板材
     private String plate;
+    // 鞋底材料
+    private String sole;
     private String fastPaceStr;
     private Integer fastPace;
     private String slowPaceStr;
@@ -34,7 +36,12 @@ public class ShoeDetail {
     // 距离
     private Double distance;
     private String runnerWeight;
+    // 定位
     private String position;
+    // 跑法：前全后掌，步频步幅
+    private String technique;
+    // 使用场景
+    private String scenario;
     private Integer price;
     private List<String> imageList;
     private String publishDateStr;
@@ -98,27 +105,27 @@ public class ShoeDetail {
         this.weight = weight;
     }
 
-    public Integer getToeHeight() {
+    public Float getToeHeight() {
         return toeHeight;
     }
 
-    public void setToeHeight(Integer toeHeight) {
+    public void setToeHeight(Float toeHeight) {
         this.toeHeight = toeHeight;
     }
 
-    public Integer getHeelHeight() {
+    public Float getHeelHeight() {
         return heelHeight;
     }
 
-    public void setHeelHeight(Integer heelHeight) {
+    public void setHeelHeight(Float heelHeight) {
         this.heelHeight = heelHeight;
     }
 
-    public Integer getHeelToeDrop() {
+    public Float getHeelToeDrop() {
         return heelToeDrop;
     }
 
-    public void setHeelToeDrop(Integer heelToeDrop) {
+    public void setHeelToeDrop(Float heelToeDrop) {
         this.heelToeDrop = heelToeDrop;
     }
 
@@ -152,6 +159,14 @@ public class ShoeDetail {
 
     public void setPlate(String plate) {
         this.plate = plate;
+    }
+
+    public String getSole() {
+        return sole;
+    }
+
+    public void setSole(String sole) {
+        this.sole = sole;
     }
 
     public String getFastPaceStr() {
@@ -192,6 +207,22 @@ public class ShoeDetail {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public String getTechnique() {
+        return technique;
+    }
+
+    public void setTechnique(String technique) {
+        this.technique = technique;
+    }
+
+    public String getScenario() {
+        return scenario;
+    }
+
+    public void setScenario(String scenario) {
+        this.scenario = scenario;
     }
 
     public Integer getPrice() {
