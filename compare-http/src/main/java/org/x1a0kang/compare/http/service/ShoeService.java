@@ -68,9 +68,8 @@ public class ShoeService {
             if (temp.size() == pageSize) {
                 list.add(new ArrayList<>(temp));
                 temp = new ArrayList<>();
-            } else {
-                temp.add(brandItem);
             }
+            temp.add(brandItem);
         }
         if (!temp.isEmpty()) {
             list.add(new ArrayList<>(temp));
