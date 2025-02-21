@@ -42,7 +42,8 @@ public class ShoeDetail {
     private String technique;
     // 使用场景
     private String scenario;
-    private String shortcoming;
+    // 缺点
+    private String disadvantage;
     private Integer price;
     private List<String> imageList;
     private String publishDateStr;
@@ -226,12 +227,12 @@ public class ShoeDetail {
         this.scenario = scenario;
     }
 
-    public String getShortcoming() {
-        return shortcoming;
+    public String getDisadvantage() {
+        return disadvantage;
     }
 
-    public void setShortcoming(String shortcoming) {
-        this.shortcoming = shortcoming;
+    public void setDisadvantage(String disadvantage) {
+        this.disadvantage = disadvantage;
     }
 
     public Integer getPrice() {

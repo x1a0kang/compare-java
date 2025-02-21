@@ -163,7 +163,11 @@ public class ShoeService {
     private String getPaceStr(Integer pace) {
         int minute = pace / 100;
         int second = pace % 100;
-        return minute + "分" + second + "秒";
+        String str = minute + "分";
+        if (second > 0) {
+            str += second + "秒";
+        }
+        return str;
     }
 }
 
