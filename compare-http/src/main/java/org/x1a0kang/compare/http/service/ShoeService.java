@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.x1a0kang.compare.common.utils.JodaDateUtil;
 import org.x1a0kang.compare.common.utils.StringUtil;
 import org.x1a0kang.compare.http.model.common.*;
 import org.x1a0kang.compare.http.model.request.SearchByFilterRequest;
@@ -150,6 +151,19 @@ public class ShoeService {
 
     public List<Banner> getBanner() {
         return mongoTemplate.findAll(Banner.class, "shoeBanner");
+    }
+
+    public void addShoe(ShoeDetail shoeDetail) {
+        shoeDetail.setFastPaceStr(getPaceStr(shoeDetail.getFastPace()));
+        shoeDetail.setSlowPaceStr(getPaceStr(shoeDetail.getSlowPace()));
+        shoeDetail.setPublishDate(JodaDateUtil.strToDate(shoeDetail.getPublishDateStr(), JodaDateUtil.Pattern.yyyy_MM_zh));
+        mongoTemplate.save(shoeDetail, "shoe");
+    }
+
+    private String getPaceStr(Integer pace) {
+        int minute = pace / 100;
+        int second = pace % 100;
+        return minute + "分" + second + "秒";
     }
 }
 

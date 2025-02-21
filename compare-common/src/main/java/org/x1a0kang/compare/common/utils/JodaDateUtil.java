@@ -35,6 +35,7 @@ public class JodaDateUtil {
         yyyy_MM_dd_HH_mm_ss_zh("yyyy年MM月dd日HH时mm分ss秒"),
         yyyy_MM_dd_HH_mm_ss_SSS("yyyy-MM-dd HH:mm:ss.SSS"),
         yyyy_MM_dd_zh("yyyy年MM月dd日"),
+        yyyy_MM_zh("yyyy年MM月"),
         yyyy_MM_dd_HH_mm_zh("yyyy年MM月dd日HH时mm分"),
         HH("HH"),
         HH_mm("HH:mm"),
