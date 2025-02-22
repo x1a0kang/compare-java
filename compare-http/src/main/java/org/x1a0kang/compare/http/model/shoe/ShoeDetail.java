@@ -50,6 +50,7 @@ public class ShoeDetail {
     private Date publishDate;
     private Integer hot;
     private String hotUpdateTimeStr;
+    private long updateTime;
 
     public String getProductId() {
         return productId;
@@ -297,5 +298,13 @@ public class ShoeDetail {
 
     public void setHot(Integer hot) {
         this.hot = hot;
+    }
+
+    public long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(long updateTime) {
+        this.updateTime = updateTime;
     }
 }

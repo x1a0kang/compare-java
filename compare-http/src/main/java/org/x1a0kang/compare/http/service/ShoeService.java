@@ -1,14 +1,18 @@
 package org.x1a0kang.compare.http.service;
 
 import jakarta.annotation.Resource;
+import org.slf4j.Logger;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+import org.x1a0kang.compare.common.factory.CustomLoggerFactory;
 import org.x1a0kang.compare.common.utils.JodaDateUtil;
+import org.x1a0kang.compare.common.utils.MongoUtil;
 import org.x1a0kang.compare.common.utils.StringUtil;
 import org.x1a0kang.compare.http.model.common.*;
 import org.x1a0kang.compare.http.model.request.SearchByFilterRequest;
@@ -21,6 +25,7 @@ import java.util.regex.Pattern;
 
 @Service
 public class ShoeService {
+    private final Logger logger = CustomLoggerFactory.getLogger(ShoeService.class);
     @Resource
     private MongoTemplate mongoTemplate;
     @Resource
@@ -154,20 +159,29 @@ public class ShoeService {
     }
 
     public void addShoe(ShoeDetail shoeDetail) {
-        shoeDetail.setFastPaceStr(getPaceStr(shoeDetail.getFastPace()));
-        shoeDetail.setSlowPaceStr(getPaceStr(shoeDetail.getSlowPace()));
+        shoeDetail.setFastPace(getPaceStr(shoeDetail.getFastPaceStr()));
+        shoeDetail.setSlowPace(getPaceStr(shoeDetail.getSlowPaceStr()));
         shoeDetail.setPublishDate(JodaDateUtil.strToDate(shoeDetail.getPublishDateStr(), JodaDateUtil.Pattern.yyyy_MM_zh));
-        mongoTemplate.save(shoeDetail, "shoe");
+        shoeDetail.setUpdateTime(System.currentTimeMillis());
+        Update update = MongoUtil.convertToUpdate(shoeDetail);
+        if (null == update) {
+            logger.error("object转update失败");
+            return;
+        }
+        Query query = new Query(Criteria.where("name").is(shoeDetail.getName()));
+        mongoTemplate.upsert(query, update, "shoe");
     }
 
-    private String getPaceStr(Integer pace) {
-        int minute = pace / 100;
-        int second = pace % 100;
-        String str = minute + "分";
-        if (second > 0) {
-            str += second + "秒";
+    private Integer getPaceStr(String pace) {
+        if (pace.endsWith("秒")) {
+            pace = pace.substring(0, pace.length() - 1);
         }
-        return str;
+        String[] split = pace.split("分");
+        int result = Integer.parseInt(split[0]) * 100;
+        if (split.length > 1) {
+            result += Integer.parseInt(split[1]);
+        }
+        return result;
     }
 }
 
