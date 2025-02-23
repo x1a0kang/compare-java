@@ -1,9 +1,10 @@
 package org.x1a0kang.compare.http.model.common;
 
-public class Banner extends DataSelectEntity {
+public class Banner extends OrderScore {
     private String url;
     private String productId;
     private String name;
+    private boolean valid;
 
     public String getUrl() {
         return url;
@@ -27,5 +28,13 @@ public class Banner extends DataSelectEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 }

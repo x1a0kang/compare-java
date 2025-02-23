@@ -1,6 +1,6 @@
 package org.x1a0kang.compare.http.model.common;
 
-public class DataSelectEntity {
+public class DataSelectEntity extends OrderScore {
     private String value;
     private String text;
 

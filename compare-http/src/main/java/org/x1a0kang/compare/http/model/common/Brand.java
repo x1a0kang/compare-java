@@ -2,7 +2,7 @@ package org.x1a0kang.compare.http.model.common;
 
 import java.util.List;
 
-public class Brand {
+public class Brand extends OrderScore {
     private String english;
     private String chinese;
     private String icon;

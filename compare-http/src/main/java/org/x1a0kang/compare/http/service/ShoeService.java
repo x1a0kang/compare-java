@@ -59,16 +59,18 @@ public class ShoeService {
     }
 
     public List<Shoe> getAll(int page, int pageSize) {
-        Query query = pageQuery(page, pageSize);
+        Query query = pageQuery(page, pageSize).with(Sort.by(Sort.Direction.DESC, "updateTime"));
         return mongoTemplate.find(query, Shoe.class, "shoe");
     }
 
     public List<Spec> getSpec() {
-        return mongoTemplate.findAll(Spec.class, "shoeSpec");
+        Query query = new Query().with(Sort.by(Sort.Direction.DESC, "orderScore"));
+        return mongoTemplate.find(query, Spec.class, "shoeSpec");
     }
 
     public List<List<Brand>> getBrandSplit() {
-        List<Brand> brand = mongoTemplate.findAll(Brand.class, "shoeBrand");
+        Query query = new Query().with(Sort.by(Sort.Direction.DESC, "orderScore"));
+        List<Brand> brand = mongoTemplate.find(query, Brand.class, "shoeBrand");
         List<List<Brand>> list = new ArrayList<>();
         int pageSize = 10;
         List<Brand> temp = new ArrayList<>();
@@ -86,19 +88,21 @@ public class ShoeService {
     }
 
     public List<Brand> getBrand() {
-        return mongoTemplate.findAll(Brand.class, "shoeBrand");
+        Query query = new Query().with(Sort.by(Sort.Direction.DESC, "orderScore"));
+        return mongoTemplate.find(query, Brand.class, "shoeBrand");
     }
 
     public List<Shoe> search(int page, int pageSize, String keyword) {
         // TODO：现在先以产品名，品牌，别名，标签筛选，看有没有机会上ES吧
-        Query query = pageQuery(page, pageSize);
+        Query query = pageQuery(page, pageSize).with(Sort.by(Sort.Direction.DESC, "updateTime"));
+        ;
         Pattern pattern = Pattern.compile(".*" + keyword + ".*", Pattern.CASE_INSENSITIVE);
         query.addCriteria(new Criteria().orOperator(Criteria.where("brand").regex(pattern), Criteria.where("name").regex(pattern), Criteria.where("otherName").regex(pattern), Criteria.where("tab").regex(pattern)));
         return mongoTemplate.find(query, Shoe.class, "shoe");
     }
 
     public List<Categories> getCategories(int page, int pageSize) {
-        Query query = pageQuery(page, pageSize);
+        Query query = pageQuery(page, pageSize).with(Sort.by(Sort.Direction.DESC, "orderScore"));
         return mongoTemplate.find(query, Categories.class, "shoeCategories");
     }
 
@@ -115,6 +119,8 @@ public class ShoeService {
             } else {
                 query.with(Sort.by(Sort.Direction.DESC, orderKey));
             }
+        } else {
+            query.with(Sort.by(Sort.Direction.DESC, "updateTime"));
         }
 
         if (StringUtil.isNotNullOrEmpty(key)) {
@@ -159,11 +165,13 @@ public class ShoeService {
     }
 
     public List<OrderSpec> getOrderSpec() {
-        return mongoTemplate.findAll(OrderSpec.class, "shoeOrderSpec");
+        Query query = new Query().with(Sort.by(Sort.Direction.DESC, "orderScore"));
+        return mongoTemplate.find(query, OrderSpec.class, "shoeOrderSpec");
     }
 
     public List<Banner> getBanner() {
-        return mongoTemplate.findAll(Banner.class, "shoeBanner");
+        Query query = new Query(Criteria.where("valid").is(true)).with(Sort.by(Sort.Direction.DESC, "orderScore"));
+        return mongoTemplate.find(query, Banner.class, "shoeBanner");
     }
 
     public void addShoe(ShoeDetail shoeDetail) {

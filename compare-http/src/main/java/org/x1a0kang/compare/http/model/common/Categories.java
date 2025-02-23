@@ -1,6 +1,6 @@
 package org.x1a0kang.compare.http.model.common;
 
-public class Categories {
+public class Categories extends OrderScore {
     private String name;
     private String coverUrl;
     private String key;
