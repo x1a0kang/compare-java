@@ -10,6 +10,7 @@ public class Shoe {
     private String name;
     private String brand;
     private List<String> imageList;
+    private Integer hot;
     private String hotUpdateTimeStr;
 
     public String getProductId() {
@@ -42,6 +43,14 @@ public class Shoe {
 
     public void setImageList(List<String> imageList) {
         this.imageList = imageList;
+    }
+
+    public Integer getHot() {
+        return hot;
+    }
+
+    public void setHot(Integer hot) {
+        this.hot = hot;
     }
 
     public String getHotUpdateTimeStr() {

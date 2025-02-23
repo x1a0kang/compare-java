@@ -21,7 +21,9 @@ import org.x1a0kang.compare.http.model.shoe.ShoeDetail;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 public class ShoeService {
@@ -138,11 +140,17 @@ public class ShoeService {
             idList.add(count.getProductId());
         }
         List<Shoe> shoeList = getShoeList(idList);
-        for (int i = 0; i < shoeList.size(); i++) {
-//            shoeSimpleList.get(i).setHot(hotRank.get(i).getHot());
-            shoeList.get(i).setHotUpdateTimeStr(hotRank.get(i).getUpdateTimeStr());
+
+        Map<String, Shoe> shoeMap = shoeList.stream().collect(Collectors.toMap(Shoe::getProductId, shoe -> shoe));
+        List<Shoe> shoeListSorted = new ArrayList<>();
+
+        for (int i = 0; i < hotRank.size(); i++) {
+            Shoe shoe = shoeMap.get(idList.get(i));
+            shoe.setHot(hotRank.get(i).getHot());
+            shoe.setHotUpdateTimeStr(hotRank.get(i).getUpdateTimeStr());
+            shoeListSorted.add(shoe);
         }
-        return shoeList;
+        return shoeListSorted;
     }
 
     private Query pageQuery(int page, int pageSize) {
