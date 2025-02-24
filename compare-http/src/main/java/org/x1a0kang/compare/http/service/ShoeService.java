@@ -45,12 +45,28 @@ public class ShoeService {
 
     public List<Shoe> getShoeList(List<String> idList) {
         Query query = new Query(Criteria.where("_id").in(idList));
-        return mongoTemplate.find(query, Shoe.class, "shoe");
+        List<Shoe> shoeList = mongoTemplate.find(query, Shoe.class, "shoe");
+        Map<String, Shoe> shoeMap = shoeList.stream().collect(Collectors.toMap(Shoe::getProductId, shoe -> shoe));
+        List<Shoe> shoeListSorted = new ArrayList<>();
+
+        for (String s : idList) {
+            Shoe shoe = shoeMap.get(s);
+            shoeListSorted.add(shoe);
+        }
+        return shoeListSorted;
     }
 
     public List<ShoeDetail> getShoeDetailList(List<String> idList) {
         Query query = new Query(Criteria.where("_id").in(idList));
-        return mongoTemplate.find(query, ShoeDetail.class, "shoe");
+        List<ShoeDetail> shoeDetailList = mongoTemplate.find(query, ShoeDetail.class, "shoe");
+        Map<String, ShoeDetail> shoeMap = shoeDetailList.stream().collect(Collectors.toMap(ShoeDetail::getProductId, shoeDetail -> shoeDetail));
+        List<ShoeDetail> shoeListSorted = new ArrayList<>();
+
+        for (String s : idList) {
+            ShoeDetail shoeDetail = shoeMap.get(s);
+            shoeListSorted.add(shoeDetail);
+        }
+        return shoeListSorted;
     }
 
     public List<Shoe> priceRange(double min, double max) {

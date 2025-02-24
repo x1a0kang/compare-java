@@ -1,15 +1,8 @@
 package org.x1a0kang.compare.http.model.shoe;
 
-import org.springframework.data.annotation.Id;
-
 import java.util.Date;
-import java.util.List;
 
-public class ShoeDetail {
-    @Id
-    private String productId;
-    private String name;
-    private String brand;
+public class ShoeDetail extends Shoe {
     private String otherName;
     // 鞋码，鞋长
     private String length;
@@ -45,36 +38,9 @@ public class ShoeDetail {
     // 缺点
     private String disadvantage;
     private Integer price;
-    private List<String> imageList;
     private String publishDateStr;
     private Date publishDate;
-    private Integer hot;
-    private String hotUpdateTimeStr;
     private long updateTime;
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
 
     public String getOtherName() {
         return otherName;
@@ -244,14 +210,6 @@ public class ShoeDetail {
         this.price = price;
     }
 
-    public List<String> getImageList() {
-        return imageList;
-    }
-
-    public void setImageList(List<String> imageList) {
-        this.imageList = imageList;
-    }
-
     public String getPublishDateStr() {
         return publishDateStr;
     }
@@ -282,22 +240,6 @@ public class ShoeDetail {
 
     public void setSlowPace(Integer slowPace) {
         this.slowPace = slowPace;
-    }
-
-    public String getHotUpdateTimeStr() {
-        return hotUpdateTimeStr;
-    }
-
-    public void setHotUpdateTimeStr(String hotUpdateTimeStr) {
-        this.hotUpdateTimeStr = hotUpdateTimeStr;
-    }
-
-    public Integer getHot() {
-        return hot;
-    }
-
-    public void setHot(Integer hot) {
-        this.hot = hot;
     }
 
     public long getUpdateTime() {
