@@ -141,7 +141,7 @@ subprojects {
         }
     }
 
-    project(':compare-http') { version = '1.0.0' }           //服务1，接口服务
+    project(':compare-http') { version = '1.0.4' }           //服务1，接口服务
     project(':compare-common') { version = '1.0.0' }         //类库1，工具库组件
 
     // java编译的时候缺省状态下会因为中文字符而失败
