@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.x1a0kang.compare.common.model.ApiReturnInfo;
 import org.x1a0kang.compare.http.model.request.DownloadImageRequest;
+import org.x1a0kang.compare.http.model.request.SetImageListRequest;
 import org.x1a0kang.compare.http.model.shoe.ShoeDetail;
 import org.x1a0kang.compare.http.service.WriteDataService;
 
@@ -31,6 +32,15 @@ public class WriteController {
             return ApiReturnInfo.getParamMissing();
         }
         writeDataService.downloadImage(request.getUrl(), request.getSavePath(), request.getFileName());
+        return ApiReturnInfo.getSuccess();
+    }
+
+    @PostMapping("/setImageList")
+    public ApiReturnInfo setImageList(@RequestBody(required = false) SetImageListRequest request) {
+        if (null == request) {
+            return ApiReturnInfo.getParamMissing();
+        }
+        writeDataService.setImageList(request.getId(), request.getUrl(), request.getNum());
         return ApiReturnInfo.getSuccess();
     }
 }

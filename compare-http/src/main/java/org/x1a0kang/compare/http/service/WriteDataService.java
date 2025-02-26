@@ -19,6 +19,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class WriteDataService {
@@ -99,5 +101,18 @@ public class WriteDataService {
             }
         }
         return fileName + "-" + (max + 1);
+    }
+
+    public void setImageList(String id, String url, int num) {
+        List<String> imageList = new ArrayList<>();
+        String prefix = url.substring(0, url.length() - 5);
+        String suffix = url.substring(url.length() - 4);
+        for (int i = 1; i <= num; i++) {
+            imageList.add(prefix + i + suffix);
+        }
+        Update update = new Update();
+        update.set("imageList", imageList);
+        Query query = new Query(Criteria.where("_id").is(id));
+        mongoTemplate.upsert(query, update, "shoe");
     }
 }
