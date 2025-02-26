@@ -209,13 +209,4 @@ public class ShoeController {
         countService.addPk(request.getIdList());
         return ApiReturnInfo.getSuccess();
     }
-
-    @PostMapping("/addShoe")
-    public ApiReturnInfo addShoe(@RequestBody(required = false) ShoeDetail shoeDetail) {
-        if (null == shoeDetail) {
-            return ApiReturnInfo.getParamMissing();
-        }
-        shoeService.addShoe(shoeDetail);
-        return ApiReturnInfo.getSuccess();
-    }
 }

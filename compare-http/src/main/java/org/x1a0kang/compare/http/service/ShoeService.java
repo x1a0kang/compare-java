@@ -8,11 +8,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.x1a0kang.compare.common.factory.CustomLoggerFactory;
-import org.x1a0kang.compare.common.utils.JodaDateUtil;
-import org.x1a0kang.compare.common.utils.MongoUtil;
 import org.x1a0kang.compare.common.utils.StringUtil;
 import org.x1a0kang.compare.http.model.common.*;
 import org.x1a0kang.compare.http.model.request.SearchByFilterRequest;
@@ -188,32 +185,6 @@ public class ShoeService {
     public List<Banner> getBanner() {
         Query query = new Query(Criteria.where("valid").is(true)).with(Sort.by(Sort.Direction.DESC, "orderScore"));
         return mongoTemplate.find(query, Banner.class, "shoeBanner");
-    }
-
-    public void addShoe(ShoeDetail shoeDetail) {
-        shoeDetail.setFastPace(getPaceStr(shoeDetail.getFastPaceStr()));
-        shoeDetail.setSlowPace(getPaceStr(shoeDetail.getSlowPaceStr()));
-        shoeDetail.setPublishDate(JodaDateUtil.strToDate(shoeDetail.getPublishDateStr(), JodaDateUtil.Pattern.yyyy_MM_zh));
-        shoeDetail.setUpdateTime(System.currentTimeMillis());
-        Update update = MongoUtil.convertToUpdate(shoeDetail);
-        if (null == update) {
-            logger.error("object转update失败");
-            return;
-        }
-        Query query = new Query(Criteria.where("name").is(shoeDetail.getName()));
-        mongoTemplate.upsert(query, update, "shoe");
-    }
-
-    private Integer getPaceStr(String pace) {
-        if (pace.endsWith("秒")) {
-            pace = pace.substring(0, pace.length() - 1);
-        }
-        String[] split = pace.split("分");
-        int result = Integer.parseInt(split[0]) * 100;
-        if (split.length > 1) {
-            result += Integer.parseInt(split[1]);
-        }
-        return result;
     }
 }
 
