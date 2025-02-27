@@ -29,8 +29,6 @@ public class ShoeDetail extends Shoe {
     // 距离
     private Double distance;
     private String runnerWeight;
-    // 定位
-    private String position;
     // 跑法：前全后掌，步频步幅
     private String technique;
     // 使用场景
@@ -168,14 +166,6 @@ public class ShoeDetail extends Shoe {
 
     public void setRunnerWeight(String runnerWeight) {
         this.runnerWeight = runnerWeight;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
     }
 
     public String getTechnique() {

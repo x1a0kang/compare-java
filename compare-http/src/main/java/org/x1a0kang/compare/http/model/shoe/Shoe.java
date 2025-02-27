@@ -9,6 +9,9 @@ public class Shoe {
     private String productId;
     private String name;
     private String brand;
+    // 定位
+    private String position;
+    private List<String> scenarioList;
     private List<String> imageList;
     private Integer hot;
     private String hotUpdateTimeStr;
@@ -35,6 +38,22 @@ public class Shoe {
 
     public void setBrand(String brand) {
         this.brand = brand;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public List<String> getScenarioList() {
+        return scenarioList;
+    }
+
+    public void setScenarioList(List<String> scenarioList) {
+        this.scenarioList = scenarioList;
     }
 
     public List<String> getImageList() {

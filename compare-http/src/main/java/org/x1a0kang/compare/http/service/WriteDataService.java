@@ -20,6 +20,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -114,5 +115,19 @@ public class WriteDataService {
         update.set("imageList", imageList);
         Query query = new Query(Criteria.where("_id").is(id));
         mongoTemplate.upsert(query, update, "shoe");
+    }
+
+    public void generateScenarioList() {
+        List<ShoeDetail> shoeDetailList = mongoTemplate.findAll(ShoeDetail.class, "shoe");
+        for (ShoeDetail shoeDetail : shoeDetailList) {
+            shoeDetail.setScenario(shoeDetail.getScenario().replace(",", "，"));
+            String[] split = shoeDetail.getScenario().split("，");
+            shoeDetail.setScenarioList(Arrays.asList(split));
+            Query query = new Query(Criteria.where("_id").is(shoeDetail.getProductId()));
+            Update update = new Update();
+            update.set("scenario", shoeDetail.getScenario());
+            update.set("scenarioList", shoeDetail.getScenarioList());
+            mongoTemplate.upsert(query, update, "shoe");
+        }
     }
 }
