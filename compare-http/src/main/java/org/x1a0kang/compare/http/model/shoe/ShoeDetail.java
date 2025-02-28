@@ -35,7 +35,6 @@ public class ShoeDetail extends Shoe {
     private String scenario;
     // 缺点
     private String disadvantage;
-    private Integer price;
     private String publishDateStr;
     private Date publishDate;
     private long updateTime;
@@ -190,14 +189,6 @@ public class ShoeDetail extends Shoe {
 
     public void setDisadvantage(String disadvantage) {
         this.disadvantage = disadvantage;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
     }
 
     public String getPublishDateStr() {

@@ -12,6 +12,7 @@ public class Shoe {
     // 定位
     private String position;
     private List<String> scenarioList;
+    private Integer price;
     private List<String> imageList;
     private Integer hot;
     private String hotUpdateTimeStr;
@@ -54,6 +55,14 @@ public class Shoe {
 
     public void setScenarioList(List<String> scenarioList) {
         this.scenarioList = scenarioList;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public List<String> getImageList() {
