@@ -34,6 +34,7 @@ public class WriteDataService {
         shoeDetail.setSlowPace(getPaceStr(shoeDetail.getSlowPaceStr()));
         shoeDetail.setPublishDate(JodaDateUtil.strToDate(shoeDetail.getPublishDateStr(), JodaDateUtil.Pattern.yyyy_MM_zh));
         shoeDetail.setUpdateTime(System.currentTimeMillis());
+        shoeDetail.setScenarioList(Arrays.asList(shoeDetail.getScenario().split("，")));
         Update update = MongoUtil.convertToUpdate(shoeDetail);
         if (null == update) {
             logger.error("object转update失败");
@@ -93,7 +94,7 @@ public class WriteDataService {
     private String getNameNum(String savePath, String fileName) {
         File dictionary = new File(savePath);
         File[] files = dictionary.listFiles();
-        int max = 1;
+        int max = 0;
         for (File file : files) {
             String name = file.getName();
             if (name.contains(fileName)) {
