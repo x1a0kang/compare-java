@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.x1a0kang.compare.common.factory.CustomLoggerFactory;
 import org.x1a0kang.compare.common.utils.JodaDateUtil;
 import org.x1a0kang.compare.common.utils.MongoUtil;
+import org.x1a0kang.compare.http.model.request.ExtractSubtitleRequest;
 import org.x1a0kang.compare.http.model.shoe.ShoeDetail;
 
 import java.io.File;
@@ -130,5 +131,14 @@ public class WriteDataService {
             update.set("scenarioList", shoeDetail.getScenarioList());
             mongoTemplate.upsert(query, update, "shoe");
         }
+    }
+
+    public String extractSubtitle(ExtractSubtitleRequest request) {
+        List<ExtractSubtitleRequest.Subtitle> subtitleList = request.getBody();
+        StringBuilder sb = new StringBuilder();
+        for (ExtractSubtitleRequest.Subtitle subtitle : subtitleList) {
+            sb.append(subtitle.getContent()).append("，");
+        }
+        return sb.toString();
     }
 }

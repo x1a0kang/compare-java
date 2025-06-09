@@ -171,6 +171,7 @@ subprojects {
         implementation rootProject.ext.libraries['spring-boot-starter-web']
         implementation rootProject.ext.libraries['spring-boot-starter-actuator']
         implementation rootProject.ext.libraries['spring-boot-admin-starter-client']
+        implementation rootProject.ext.libraries['spring-boot-starter-aop']
         implementation rootProject.ext.libraries['commons-pool2']
         implementation rootProject.ext.libraries['commons-lang3']
         implementation rootProject.ext.libraries['guava']
