@@ -51,6 +51,9 @@ public class ShoeService {
 
         for (String s : idList) {
             Shoe shoe = shoeMap.get(s);
+            if (shoe == null) {
+                continue;
+            }
             shoeListSorted.add(shoe);
         }
         return shoeListSorted;
@@ -170,6 +173,9 @@ public class ShoeService {
 
         for (int i = 0; i < hotRank.size(); i++) {
             Shoe shoe = shoeMap.get(idList.get(i));
+            if (shoe == null) {
+                continue;
+            }
             shoe.setHot(hotRank.get(i).getHot());
             shoe.setHotUpdateTimeStr(hotRank.get(i).getUpdateTimeStr());
             shoeListSorted.add(shoe);
