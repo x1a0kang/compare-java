@@ -16,6 +16,7 @@ public class Shoe {
     private List<String> imageList;
     private Integer hot;
     private String hotUpdateTimeStr;
+    private boolean delete;
 
     public String getProductId() {
         return productId;
@@ -87,5 +88,13 @@ public class Shoe {
 
     public void setHotUpdateTimeStr(String hotUpdateTimeStr) {
         this.hotUpdateTimeStr = hotUpdateTimeStr;
+    }
+
+    public boolean getDelete() {
+        return delete;
+    }
+
+    public void setDelete(boolean delete) {
+        this.delete = delete;
     }
 }

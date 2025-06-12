@@ -31,17 +31,20 @@ public class ShoeService {
     private CountService countService;
 
     public Shoe getShoe(String id) {
-        Query query = new Query(Criteria.where("_id").is(id));
+        Query query = baseQuery();
+        query.addCriteria(Criteria.where("_id").is(id));
         return mongoTemplate.findOne(query, Shoe.class, "shoe");
     }
 
     public ShoeDetail getShoeDetail(String id) {
-        Query query = new Query(Criteria.where("_id").is(id));
+        Query query = baseQuery();
+        query.addCriteria(Criteria.where("_id").is(id));
         return mongoTemplate.findOne(query, ShoeDetail.class, "shoe");
     }
 
     public List<Shoe> getShoeList(List<String> idList) {
-        Query query = new Query(Criteria.where("_id").in(idList));
+        Query query = baseQuery();
+        query.addCriteria(Criteria.where("_id").in(idList));
         List<Shoe> shoeList = mongoTemplate.find(query, Shoe.class, "shoe");
         Map<String, Shoe> shoeMap = shoeList.stream().collect(Collectors.toMap(Shoe::getProductId, shoe -> shoe));
         List<Shoe> shoeListSorted = new ArrayList<>();
@@ -54,7 +57,8 @@ public class ShoeService {
     }
 
     public List<ShoeDetail> getShoeDetailList(List<String> idList) {
-        Query query = new Query(Criteria.where("_id").in(idList));
+        Query query = baseQuery();
+        query.addCriteria(Criteria.where("_id").in(idList));
         List<ShoeDetail> shoeDetailList = mongoTemplate.find(query, ShoeDetail.class, "shoe");
         Map<String, ShoeDetail> shoeMap = shoeDetailList.stream().collect(Collectors.toMap(ShoeDetail::getProductId, shoeDetail -> shoeDetail));
         List<ShoeDetail> shoeListSorted = new ArrayList<>();
@@ -67,7 +71,8 @@ public class ShoeService {
     }
 
     public List<Shoe> priceRange(double min, double max) {
-        Query query = new Query(Criteria.where("price").gte(min).lte(max));
+        Query query = baseQuery();
+        query.addCriteria(Criteria.where("price").gte(min).lte(max));
         return mongoTemplate.find(query, Shoe.class, "shoe");
     }
 
@@ -174,7 +179,12 @@ public class ShoeService {
 
     private Query pageQuery(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize);
-        return new Query().with(pageable);
+        Query query = baseQuery();
+        return query.with(pageable);
+    }
+
+    private Query baseQuery() {
+        return new Query(Criteria.where("delete").ne(true));
     }
 
     public List<OrderSpec> getOrderSpec() {
